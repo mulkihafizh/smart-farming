@@ -18,7 +18,7 @@ export default function landingPage() {
               ever since the 1500s, when an unknown printer took a galley.
             </p>
             <div className="headerButton">
-              <a href="/dashboard">
+              <a href={`/dashboard`}>
                 <button className="redirectButton">Maps</button>
               </a>
             </div>
