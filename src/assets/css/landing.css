@@ -1,0 +1,109 @@
+.landingHeader {
+  width: 100%;
+  height: 100vh;
+  background-image: url("../images/landingBg.png");
+  background-size: cover;
+}
+
+.landingSection {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 50px;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    52.54deg,
+    #00345b 49.96%,
+    rgba(0, 52, 91, 0.79) 88.92%
+  );
+  box-shadow: 11px 11px 12px rgba(18, 85, 134, 0.41);
+  border-radius: 0px 37px 37px 0px;
+}
+
+.appTitle {
+  color: white;
+  font-size: 24px;
+}
+
+.mainHeader {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bigText {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 62px;
+  line-height: 53px;
+
+  color: #ffffff;
+  background: conic-gradient(
+    from 199.05deg at 58.91% 65.77%,
+    #45ade3 -33.98deg,
+    #ffffff 13.64deg,
+    #45ade3 326.02deg,
+    #ffffff 373.64deg
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  text-shadow: -5px 8px 4px rgba(0, 0, 0, 0.25);
+}
+
+.mediumText {
+  font-weight: 500;
+  font-size: 32px;
+  color: #fff;
+}
+.mediumText span {
+  color: #45ade3;
+}
+.smallText {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 40px;
+}
+.redirectButton {
+  outline: none;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    linear-gradient(73.61deg, #47a6ce 9.49%, #b0defc 29.87%, #dafffd 76.45%);
+  background-blend-mode: color-dodge, normal;
+  border-style: solid;
+  border-color: #fbfbfb;
+  box-shadow: -5px 4px 4px rgba(26, 26, 26, 0.43);
+  border-radius: 6px;
+  font-size: 24px;
+  line-height: 110%;
+  padding: 10px 40px;
+  text-align: center;
+  font-weight: 600;
+  color: #2a5677;
+
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Smaller Screen */
+@media screen and (max-width: 1024px) {
+  .landingSection {
+    width: 100%;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .bigText {
+    font-size: 48px;
+  }
+  .mediumText {
+    font-size: 24px;
+  }
+  .smallText {
+    font-size: 14px;
+  }
+  .redirectButton {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,430 @@
+/* Dashboard CSS */
+.searchInput {
+  display: flex;
+  gap: 5px;
+  padding: 0px 20px;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 50px;
+  height: 40px;
+}
+.fa-magnifying-glass {
+  border-left: 2px solid #000;
+  padding-left: 10px;
+}
+.searchBar {
+  border-width: 0px;
+  padding: 10px;
+  width: 100%;
+}
+
+.searchBar:focus {
+  outline: none;
+}
+
+#dashboardHead {
+  height: 8vh;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mainContainer {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  height: 100vh;
+  transition: all 0.5s;
+}
+
+.userProfile {
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  grid-column-start: 3;
+}
+
+.userName {
+  font-size: 20px;
+}
+
+.userProfilePic {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.rightSide {
+  transition: all 0.5s;
+  max-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Map CSS */
+#mapContainer {
+  height: 92vh;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+#mapContainer.loading {
+  opacity: 0.5;
+}
+
+#mapContainer.loading::after {
+  content: "Loading map...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#mapContainer.loaded {
+  opacity: 1;
+}
+
+.leaflet-control {
+  display: none;
+}
+
+.rightSide * {
+  transition: all 0.3s;
+}
+
+/* Details */
+.sensorDetails {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  height: 92vh;
+}
+.sensorData {
+  height: 100%;
+}
+
+.sensorTitle {
+  font-size: 36px;
+  color: #306a96;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.historyMain {
+  font-size: 20px;
+  color: #2a5677;
+  margin-bottom: 10px;
+}
+
+.historyItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.historyItem {
+  background: #cee3f2;
+  border-radius: 18px;
+  padding: 10px 20px;
+}
+
+.historyTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #2b2b2b;
+}
+
+/* Sidebar */
+#sidebar {
+  position: relative;
+  transition: all 0.5s;
+  color: #ffffff;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+  background: #8bb9d1;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+  z-index: 999;
+}
+
+.mainContainer:has(.hideSidebar) {
+  grid-template-columns: 1fr 7fr;
+}
+
+.leftSide:has(.hideSidebar) {
+  display: flex;
+  justify-content: center;
+}
+
+.openSidebar {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.mainContainer:has(.hideSidebar) .openSidebar {
+  display: block;
+}
+
+.hideSidebar {
+  transform: translateX(-200%);
+}
+
+.closeSidebar {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.sidebarTitle {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.mainSideTitle {
+  text-align: center;
+  width: 70%;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 0px 20px;
+}
+
+.farmName {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.addFarmItem a {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.addFarmItem a p {
+  font-size: 18px;
+}
+
+.itemTitle {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sideItems .items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 0px 28px;
+}
+
+.sideItems a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.items p {
+  cursor: pointer;
+}
+
+@media (max-width: 1280px) {
+  .sideItems .items {
+    padding: 0px 20px;
+  }
+  .mainSideTitle {
+    font-size: 18px;
+  }
+
+  .sidebarMenu {
+    padding: 0px;
+  }
+
+  .addFarmItem a {
+    padding: 10px;
+  }
+
+  .addFarmItem a p {
+    font-size: 14px;
+  }
+
+  .farmName {
+    font-size: 14px;
+  }
+
+  .itemTitle {
+    font-size: 14px;
+  }
+
+  .sideItems .items {
+    padding: 0px 25px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1056px) {
+  .divided {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+  #mapContainer {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    height: 92vh;
+  }
+
+  .sensorDetails {
+    grid-row-start: 2;
+    height: 100%;
+  }
+  .sensorTitle {
+    font-size: 24px;
+  }
+
+  .historyMain {
+    font-size: 16px;
+  }
+
+  .historyItem {
+    padding: 10px;
+  }
+
+  .historyTitle {
+    font-size: 16px;
+  }
+
+  .historyList {
+    font-size: 14px;
+  }
+  .closeSidebar {
+    display: block;
+  }
+  .openSidebar {
+    display: block;
+  }
+
+  .mainSideTitle {
+    font-size: 16px;
+  }
+
+  .sidebarMenu {
+    padding: 0px;
+  }
+
+  .addFarmItem a {
+    padding: 10px;
+  }
+
+  .addFarmItem a p {
+    font-size: 12px;
+  }
+
+  .farmName {
+    font-size: 12px;
+  }
+
+  .itemTitle {
+    font-size: 12px;
+  }
+
+  .sideItems .items {
+    padding: 0px 25px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    width: 40%;
+    z-index: 999;
+    position: absolute;
+  }
+}
+
+/* Small Screen */
+@media (max-width: 426px) {
+  .userName {
+    display: none;
+  }
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rightSide {
+    height: auto;
+  }
+
+  .sensorTitle {
+    font-size: 24px;
+  }
+
+  .historyMain {
+    font-size: 16px;
+  }
+
+  .historyItem {
+    padding: 10px;
+  }
+
+  .historyTitle {
+    font-size: 16px;
+  }
+
+  .historyList {
+    font-size: 14px;
+  }
+
+  #sidebar {
+    width: 60%;
+    position: absolute;
+    z-index: 999;
+  }
+}
+
+@media (max-width: 321px) {
+  #sidebar {
+    width: 70%;
+  }
+}
