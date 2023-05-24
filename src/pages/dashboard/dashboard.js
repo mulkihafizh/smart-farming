@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -14,7 +14,9 @@ L.Icon.Default.mergeOptions({
 
 export default function Dashboard() {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [selectedFarm, setSelectedFarm] = useState(null);
   const [sensorItemClicked, setSensorItemClicked] = useState(false);
+  const [selectedSensor, setSelectedSensor] = useState(null);
 
   const farmData = [
     {
@@ -24,15 +26,48 @@ export default function Dashboard() {
       sensors: [
         {
           name: "Water Flow",
+          history: [
+            {
+              date: "2021-08-01",
+              title: "Water Flow",
+              description: "Water flow is normal",
+            },
+          ],
         },
         {
           name: "Water Meter",
+          history: [
+            {
+              date: "2021-08-01",
+              title: "Water Meter",
+              description: "Water Meter is low",
+            },
+            {
+              date: "2021-07-28",
+              title: "Water Meter",
+              description: "Water Meter is high",
+            },
+          ],
         },
         {
           name: "Water Ph",
+          history: [
+            {
+              date: "2021-08-01",
+              title: "Water Ph",
+              description: "Water Ph is normal",
+            },
+          ],
         },
         {
           name: "Soil Density",
+          history: [
+            {
+              date: "2021-08-01",
+              title: "Soil Density",
+              description: "Soil Density is normal",
+            },
+          ],
         },
       ],
     },
@@ -43,9 +78,11 @@ export default function Dashboard() {
       sensors: [
         {
           name: "Water Flow",
+          history: [],
         },
         {
           name: "Soil Density",
+          history: [],
         },
       ],
     },
@@ -55,15 +92,62 @@ export default function Dashboard() {
     setMapLoaded(true);
   };
 
-  const handleSensorItemClick = () => {
-    setSensorItemClicked((prevState) => !prevState);
+  const handleMarkerClick = (farm) => {
+    if (selectedFarm !== farm) {
+      setSelectedFarm(farm);
+      setSelectedSensor(null);
+      setSensorItemClicked(false);
+    } else {
+      setSensorItemClicked((prevValue) => !prevValue);
+    }
   };
 
+  useEffect(() => {
+    const mapContainer = document.getElementById("mapContainer");
+
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          const sensorDetails = mapContainer.querySelector(".sensorDetails");
+          if (!sensorDetails) {
+            console.log("Sensor details not found");
+            try {
+              setSelectedSensor(null);
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        }
+      }
+    });
+
+    if (mapContainer) {
+      observer.observe(mapContainer, { childList: true });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleSensorItemClick = (sensorName) => {
+    setSelectedSensor((prevSensor) =>
+      prevSensor === sensorName ? null : sensorName
+    );
+    setSensorItemClicked((prevState) =>
+      sensorName === selectedSensor ? !prevState : true
+    );
+  };
   return (
     <div className="mainContainer">
-        <SideBar onSensorItemClick={handleSensorItemClick} />
+      <SideBar
+        selectedSensor={selectedSensor}
+        selectedFarm={selectedFarm}
+        onSensorItemClick={handleSensorItemClick}
+      />
       <div className="rightSide">
         <header id="dashboardHead">
+          {" "}
           <div className="searchInput">
             <input type="text" className="searchBar" />
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -84,29 +168,38 @@ export default function Dashboard() {
           {sensorItemClicked && (
             <div className="sensorDetails">
               <div className="sensorTitle">
-                <p className="sensorName">Water Flow</p>
+                <p className="sensorName">{selectedSensor}</p>
               </div>
               <div className="sensorData">
                 <p className="historyMain">History :</p>
                 <div className="historyItems">
-                  {["1", "2", "3"].map((item, index) => (
-                    <div className="historyItem" key={index}>
-                      <p className="historyTitle">Water FLowwwW</p>
-                      <div className="historyList">
-                        <p className="historyDate">12/12/2021</p>
-                        <div className="historyDesc">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Vitae quos, modi impedit nihil accusamus minus
-                          ab id ex illo expedita.
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  {selectedFarm.sensors.map((sensor) => {
+                    if (sensor.name === selectedSensor) {
+                      if (sensor.history.length === 0) {
+                        return (
+                          <p className="noHistory">
+                            No history found on {selectedSensor}
+                          </p>
+                        );
+                      } else {
+                        return sensor.history.map((historyItem, index) => (
+                          <div className="historyItem" key={index}>
+                            <p className="historyTitle">{historyItem.title}</p>
+                            <p className="historyDate">{historyItem.date}</p>
+
+                            <p className="historyDesc">
+                              {historyItem.description}
+                            </p>
+                          </div>
+                        ));
+                      }
+                    }
+                    return null;
+                  })}
                 </div>
               </div>
             </div>
           )}
-
           {!mapLoaded && <div>Loading map...</div>}
           <MapContainer
             center={[-6.929543, 107.627141]}
@@ -119,7 +212,13 @@ export default function Dashboard() {
               attribution=""
             />
             {farmData.map((farm, index) => (
-              <Marker key={index} position={[farm.latitude, farm.longitude]}>
+              <Marker
+                key={index}
+                position={[farm.latitude, farm.longitude]}
+                eventHandlers={{
+                  click: () => handleMarkerClick(farm),
+                }}
+              >
                 <Popup>
                   Name: {farm.name}
                   <br />

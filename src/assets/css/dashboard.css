@@ -188,10 +188,6 @@
   display: block;
 }
 
-.hideSidebar {
-  transform: translateX(-200%);
-}
-
 .closeSidebar {
   display: none;
   position: absolute;
@@ -209,7 +205,6 @@
 
 .mainSideTitle {
   text-align: center;
-  width: 70%;
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -221,6 +216,13 @@
   gap: 10px;
   width: 100%;
   padding: 0px 20px;
+}
+
+.farm {
+  background: #fff;
+  color: #000;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .farmName {
@@ -243,7 +245,7 @@
 
 .itemTitle {
   text-decoration: none;
-  color: #fff;
+  color: #000;
   font-size: 18px;
   margin-bottom: 10px;
   display: flex;
@@ -261,9 +263,13 @@
 
 .sideItems a {
   text-decoration: none;
-  color: #fff;
+  color: #000;
   display: flex;
   align-items: center;
+}
+
+.items p:hover {
+  text-decoration: underline;
 }
 
 .items p {
@@ -305,6 +311,15 @@
 }
 
 @media (max-width: 1056px) {
+  .leftSide:has(.hideSidebar) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hideSidebar {
+    transform: translateX(-200%);
+  }
+
   #mapContainer {
     display: grid;
     gap: 10px;
@@ -322,9 +337,14 @@
   }
 
   .mainContainer {
-    grid-template-columns: 1fr 7fr;
+    grid-template-columns: 1fr 15fr;
   }
 
+  #sidebar {
+    z-index: 999;
+    width: 30%;
+    position: absolute;
+  }
   .historyMain {
     font-size: 16px;
   }
@@ -389,6 +409,9 @@
 @media (max-width: 426px) {
   .userName {
     display: none;
+  }
+  .mainContainer {
+    grid-template-columns: 1fr 7fr;
   }
 
   .rightSide {
