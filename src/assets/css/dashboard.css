@@ -110,6 +110,7 @@
   border-radius: 20px;
   padding: 30px;
   height: 92vh;
+  overflow: hidden;
 }
 .sensorData {
   height: 100%;
