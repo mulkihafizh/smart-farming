@@ -171,10 +171,6 @@
   z-index: 999;
 }
 
-.mainContainer:has(.hideSidebar) {
-  grid-template-columns: 1fr 7fr;
-}
-
 .leftSide:has(.hideSidebar) {
   display: flex;
   justify-content: center;
@@ -325,6 +321,10 @@
     font-size: 24px;
   }
 
+  .mainContainer {
+    grid-template-columns: 1fr 7fr;
+  }
+
   .historyMain {
     font-size: 16px;
   }
@@ -389,10 +389,6 @@
 @media (max-width: 426px) {
   .userName {
     display: none;
-  }
-  .mainContainer {
-    display: flex;
-    flex-direction: column;
   }
 
   .rightSide {
