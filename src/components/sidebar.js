@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function Sidebar({ selectedFarm, onSensorItemClick }) {
-  const [handleSidebar, setSidebar] = useState(false);
+  const [handleSidebar, setSidebar] = useState(true);
 
   const handleSidebarClicked = () => {
     setSidebar((prevState) => !prevState);
