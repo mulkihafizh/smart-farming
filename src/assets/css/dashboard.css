@@ -337,7 +337,7 @@
   }
 
   .mainContainer {
-    grid-template-columns: 1fr 12fr;
+    grid-template-columns: 1fr 10fr;
   }
 
   #sidebar {
