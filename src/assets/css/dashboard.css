@@ -8,6 +8,15 @@
   border-radius: 50px;
   height: 40px;
 }
+@media (min-width: 1057px) {
+  .divided {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
 .fa-magnifying-glass {
   border-left: 2px solid #000;
   padding-left: 10px;
@@ -300,12 +309,6 @@
 }
 
 @media (max-width: 1056px) {
-  .divided {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    transition: all 0.5s ease-in-out;
-  }
   #mapContainer {
     display: grid;
     gap: 10px;
