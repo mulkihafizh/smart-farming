@@ -19,7 +19,7 @@ export default function landingPage() {
             </p>
             <div className="headerButton">
               <a href={`/dashboard`}>
-                <button className="redirectButton">Maps</button>
+                <button className="redirectButton">Start</button>
               </a>
             </div>
           </div>

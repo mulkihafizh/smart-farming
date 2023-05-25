@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -150,7 +150,7 @@ export default function Dashboard() {
           {" "}
           <div className="searchInput">
             <input type="text" className="searchBar" />
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid fa-magnifying-glass"></i>
           </div>
           <div className="userProfile">
             <p className="userName">Pendleton</p>
