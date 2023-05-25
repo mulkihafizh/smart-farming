@@ -12,9 +12,10 @@
   width: 45%;
   height: 100%;
   background: linear-gradient(
-    52.54deg,
-    #00345b 49.96%,
-    rgba(0, 52, 91, 0.79) 88.92%
+    53.39deg,
+    #01535e 13.17%,
+    #0b6e7b 49.63%,
+    rgba(81, 170, 165, 0.83) 96.9%
   );
   box-shadow: 11px 11px 12px rgba(18, 85, 134, 0.41);
   border-radius: 0px 37px 37px 0px;
@@ -38,17 +39,16 @@
   font-weight: 700;
   font-size: 62px;
   line-height: 53px;
-
   color: #ffffff;
   background: conic-gradient(
     from 199.05deg at 58.91% 65.77%,
-    #45ade3 -33.98deg,
+    #00ffd1 -33.98deg,
     #ffffff 13.64deg,
-    #45ade3 326.02deg,
+    #00ffd1 326.02deg,
     #ffffff 373.64deg
   );
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.735);
   background-clip: text;
 
   text-shadow: -5px 8px 4px rgba(0, 0, 0, 0.25);
@@ -60,7 +60,7 @@
   color: #fff;
 }
 .mediumText span {
-  color: #45ade3;
+  color: #00ffd1;
 }
 .smallText {
   font-size: 16px;
@@ -68,22 +68,23 @@
   margin-bottom: 40px;
 }
 .redirectButton {
+  transition: all 0.3s;
   outline: none;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(73.61deg, #47a6ce 9.49%, #b0defc 29.87%, #dafffd 76.45%);
-  background-blend-mode: color-dodge, normal;
-  border-style: solid;
-  border-color: #fbfbfb;
+  background: #fff;
+  border: none;
   box-shadow: -5px 4px 4px rgba(26, 26, 26, 0.43);
-  border-radius: 6px;
+  border-radius: 21px;
   font-size: 24px;
-  line-height: 110%;
   padding: 10px 40px;
-  text-align: center;
   font-weight: 600;
-  color: #2a5677;
+  color: #01535e;
+  cursor: pointer;
+}
 
-  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.25);
+.redirectButton:hover {
+  background: #d5fffc;
+
+  transform: scale(1.05);
 }
 
 /* Smaller Screen */
