@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/css/landing.css";
+import { Link } from "react-router-dom";
 
 export default function landingPage() {
   return (
@@ -18,9 +19,9 @@ export default function landingPage() {
               ever since the 1500s, when an unknown printer took a galley.
             </p>
             <div className="headerButton">
-              <a href={`/dashboard`}>
+              <Link to={`/dashboard`}>
                 <button className="redirectButton">Start</button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
