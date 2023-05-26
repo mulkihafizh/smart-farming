@@ -7,15 +7,21 @@ export default function LoginPage() {
     <div id="Login">
       <header className="LoginHeader">
         <div className="LoginSection">
-          <p className="appTitle">Login Credential</p>
+          <p className="loginappTitle">Login Credential</p>
           <form>
             <div className="formInput">
               <label className="Email">Email</label>
-              <input placeholder="insert your email here" />
+              <input
+                className="inputformfield"
+                placeholder="insert your email here"
+              />
             </div>
             <div className="formInput">
               <label className="Password">Password</label>
-              <input placeholder="insert your email here" />
+              <input
+                className="inputformfield"
+                placeholder="insert your email here"
+              />
             </div>
           </form>
           <div className="button">
