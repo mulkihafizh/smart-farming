@@ -110,13 +110,6 @@
   transition: all 0.3s;
 }
 
-.createFormContainer {
-  background-color: #fff;
-  border-radius: 20px;
-  padding: 30px;
-  overflow: hidden;
-}
-
 /* Details */
 .sensorDetails {
   background-color: #fff;
@@ -463,4 +456,69 @@
   #sidebar {
     width: 70%;
   }
+}
+
+.farmFormTitle {
+  text-align: center;
+}
+
+#farmInputForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 40px;
+  width: 100%;
+}
+
+.farmForm {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.inputGroup label {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.inputGroup input {
+  padding: 10px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 16px;
+  border: 0.5px solid #000;
+}
+
+.farmSubmitButton button {
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 16px;
+  background: #1766a6;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.createFormContainer {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

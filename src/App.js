@@ -3,6 +3,7 @@ import DashboardPage from "./pages/dashboard/dashboard";
 import RegisterPage from "./pages/registerPage";
 import LoginPage from "./pages/loginPage";
 import CreateFarm from "./pages/dashboard/createFarm";
+import LoginFirst from "./pages/errors/loginFirst";
 import CreateSensor from "./pages/dashboard/createSensor";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
     element: (
       <>
         <CreateSensor />
+      </>
+    ),
+  },
+  {
+    path: "/error-access",
+    element: (
+      <>
+        <LoginFirst />
       </>
     ),
   },

@@ -8,18 +8,27 @@ export default function RegisterPage() {
       <header className="registerHeader">
         <div className="registerSection">
           <p className="registertitleApp">Register</p>
-          <form>
+          <form className="authForm">
             <div className="formInput">
               <label className="username">Username</label>
-              <input className="inputformfield" placeholder="insert your email here" />
+              <input
+                className="inputformfield"
+                placeholder="insert your email here"
+              />
             </div>
             <div className="formInput">
               <label className="email">Email</label>
-              <input className="inputformfield" placeholder="insert your email here" />
+              <input
+                className="inputformfield"
+                placeholder="insert your email here"
+              />
             </div>
             <div className="formInput">
               <label className="password">Password</label>
-              <input className="inputformfield" placeholder="insert your email here" />
+              <input
+                className="inputformfield"
+                placeholder="insert your email here"
+              />
             </div>
           </form>
           <div className="button">

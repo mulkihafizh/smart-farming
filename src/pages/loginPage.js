@@ -8,7 +8,7 @@ export default function LoginPage() {
       <header className="LoginHeader">
         <div className="LoginSection">
           <p className="loginappTitle">Login Credential</p>
-          <form>
+          <form className="authform">
             <div className="formInput">
               <label className="Email">Email</label>
               <input

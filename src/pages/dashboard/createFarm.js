@@ -75,7 +75,44 @@ export default function CreateFarm() {
     <div id="create">
       <div className="createFarm">
         <div id="mapContainer" className="divided">
-          <div className="createFormContainer"></div>
+          <div className="createFormContainer">
+            <div className="farmFormTitle">
+              <h1>Create Farm</h1>
+            </div>
+            <div className="farmForm">
+              <form method="POST" id="farmInputForm">
+                <div className="inputGroup">
+                  <div className="inputGroup">
+                    <label htmlFor="farmName">Farm Name</label>
+                    <input type="text" name="farmName" id="farmName" />
+                  </div>
+                  <div className="inputGroup">
+                    <label htmlFor="farmName">Luas Lahan</label>
+                    <input type="text" name="farmName" id="farmName" />
+                  </div>
+                  <div className="inputGroup">
+                    <label htmlFor="farmName">Jenis Tanaman</label>
+                    <input type="text" name="farmName" id="farmName" />
+                  </div>
+                  <div className="inputGroups">
+                    <div className="inputGroup">
+                      <label htmlFor="farmName">Jenis Tanaman</label>
+                      <input type="text" name="farmName" id="farmName" />
+                    </div>
+                    <div className="inputGroup">
+                      <label htmlFor="farmName">Jenis Tanaman</label>
+                      <input type="text" name="farmName" id="farmName" />
+                    </div>
+                  </div>
+                </div>
+                <div className="farmSubmitButton">
+                  <button type="submit" form="farmInputForm">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
 
           {!mapLoaded && <div>Loading map...</div>}
           <MapContainer
