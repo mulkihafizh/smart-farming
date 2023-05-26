@@ -2,6 +2,8 @@ import LandingPage from "./pages/landingPage";
 import DashboardPage from "./pages/dashboard/dashboard";
 import RegisterPage from "./pages/registerPage";
 import LoginPage from "./pages/loginPage";
+import CreateFarm from "./pages/dashboard/createFarm";
+import CreateSensor from "./pages/dashboard/createSensor";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -34,6 +36,22 @@ const router = createBrowserRouter([
     element: (
       <>
         <DashboardPage />
+      </>
+    ),
+  },
+  {
+    path: "/tambah-lahan",
+    element: (
+      <>
+        <CreateFarm />
+      </>
+    ),
+  },
+  {
+    path: "/tambah-sensor",
+    element: (
+      <>
+        <CreateSensor />
       </>
     ),
   },

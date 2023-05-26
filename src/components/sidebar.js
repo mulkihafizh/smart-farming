@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Sidebar({ selectedFarm, onSensorItemClick }) {
   const [handleSidebar, setSidebar] = useState(true);
@@ -29,9 +30,9 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
         </div>
         <div className="sidebarMenu">
           <div className="addFarmItem">
-            <a href="/dashboard">
+            <Link to={"/tambah-lahan"}>
               <i className="fa-solid fa-plus"></i> <p>Tambah Lahan</p>
-            </a>
+            </Link>
           </div>
           {selectedFarm ? (
             <div className="farm">
