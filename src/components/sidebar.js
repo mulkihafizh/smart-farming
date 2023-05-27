@@ -44,6 +44,12 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
                 </a>
               </div>
               <div className="sideItems">
+                <a href="/sensor-form" className="itemTitle">
+                  <i className="fa-solid fa-plus"></i>{" "}
+                  <p>Tambah Sensor</p>
+                </a>
+              </div>
+              <div className="sideItems">
                 <div href="" className="itemTitle">
                   <i className="fa-solid fa-gear"></i> <p>Sensor</p>
                 </div>
