@@ -1,6 +1,8 @@
 import LandingPage from "./pages/landingPage";
 import DashboardPage from "./pages/dashboard/dashboard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "./pages/loginPage";
+import RegisterPage from "./pages/registerPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,22 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/login",
+    element: (
+      <>
+        <LoginPage />
+      </>
+    )
+  },
+  {
+    path: "/register",
+    element: (
+      <>
+        <RegisterPage />
+      </>
+    )
+  }
 ]);
 
 function App() {
