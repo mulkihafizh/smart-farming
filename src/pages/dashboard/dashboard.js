@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+// import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -17,6 +19,8 @@ export default function Dashboard() {
   const [selectedFarm, setSelectedFarm] = useState(null);
   const [sensorItemClicked, setSensorItemClicked] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
+  const [cookies] = useCookies(["token"]);
+  // let navigate = useNavigate();
 
   const farmData = [
     {
@@ -103,7 +107,11 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    console.log("Dashboard mounted");
     const mapContainer = document.getElementById("mapContainer");
+    if (!cookies.token) {
+      // navigate("/error-access");
+    }
 
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
@@ -128,7 +136,7 @@ export default function Dashboard() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [cookies.token]);
 
   const handleSensorItemClick = (sensorName) => {
     setSelectedSensor((prevSensor) =>
@@ -138,6 +146,7 @@ export default function Dashboard() {
       sensorName === selectedSensor ? !prevState : true
     );
   };
+
   return (
     <div className="mainContainer">
       <SideBar
@@ -150,7 +159,7 @@ export default function Dashboard() {
           {" "}
           <div className="searchInput">
             <input type="text" className="searchBar" />
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid fa-magnifying-glass"></i>
           </div>
           <div className="userProfile">
             <p className="userName">Pendleton</p>

@@ -1,159 +1,169 @@
 .registerHeader {
-    width: 100%;
-    height: 100vh;
-    background-image: url("../images/plantbg.jpg");
-    background-size: cover;
+  width: 100%;
+  height: 100vh;
+  background-image: url("../images/plantbg.jpg");
+  background-size: cover;
 }
 
 .registerSection {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 50px;
-    width: 45%;
-    background: linear-gradient(53.39deg, #01535E 13.17%, #0B6E7B 49.63%, rgba(81, 170, 165, 0.83) 96.9%);
-    height: 100%;
-    /* background-color: linear-gradient(53.39deg, #01535E 13.17%, #0B6E7B 49.63%, rgba(81, 170, 165, 0.83) 96.9%); */
-    box-shadow: 11px 11px 12px rgba(18, 85, 134, 0.41);
-    border-radius: 0px 37px 37px 0px;
-    ;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 50px;
+  width: 45%;
+  background: linear-gradient(
+    53.39deg,
+    #01535e 13.17%,
+    #0b6e7b 49.63%,
+    rgba(81, 170, 165, 0.83) 96.9%
+  );
+  height: 100%;
+  /* background-color: linear-gradient(53.39deg, #01535E 13.17%, #0B6E7B 49.63%, rgba(81, 170, 165, 0.83) 96.9%); */
+  box-shadow: 11px 11px 12px rgba(18, 85, 134, 0.41);
+  border-radius: 0px 37px 37px 0px;
 }
 
-.titleApp {
-    position: absolute;
-    width: 90%;
-    height: 6rem;
-    left: -25%;
-    top: 1rem;
-    color: #FFFFFF;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  }
+.registertitleApp {
+  /* position: absolute; */
+  width: 90%;
+  height: 6rem;
+  left: -25%;
+  top: 1rem;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
 
 .email {
-    position: absolute;
-    width: 20%;
-    height: 6%;
-    left: 2%;
-    top: 35%;
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    color: #FFFFFF;
-    padding-top: 30%;
+  /* position: absolute; */
+  width: 20%;
+  /* height: 6%; */
+  left: 2%;
+  top: 35%;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: flex;
+  color: #ffffff;
+  /* padding-top: 30%; */
 }
 
 .password {
-    position: absolute;
-    width: 20%;
-    height: 6%;
-    left: 2%;
-    top: 35%;
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    color: #FFFFFF;
-    padding-top: 30%;
+  /* position: absolute; */
+  width: 20%;
+  /* height: 6%; */
+  left: 2%;
+  top: 35%;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: flex;
+  color: #ffffff;
+  /* padding-top: 30%; */
 }
-
 
 .username {
-    position: absolute;
-    width: 134px;
-    height: 40px;
-    left: 15px;
-    top: 33.75%;
-    font-weight: 600;
-    font-size: 20px;
-    display: flex;
-    color: #FFFFFF;
-    padding-top: 29%;
+  /* position: absolute; */
+  width: 134px;
+  /* height: 40px; */
+  left: 15px;
+  top: 33.75%;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  color: #ffffff;
+  /* padding-top: 29%; */
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.authform {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 40px;
 }
 
-.formInput {
-    margin-bottom: 110px;
-}
+/* .formInput {
+  padding-right: 10%;
+  margin-bottom: 110px;
+} */
 
 @media (max-width: 768px) {
-    input {
-      width: 90%;
-      padding-left: 1rem;
-    }
+  .inputformfield {
+    width: 90%;
+    padding-left: 1rem;
+  }
 }
 
-input {
-    position: absolute;
-    width: 80%;
-    height: 3rem;
-    left: 2%;
-    top: 11rem;
-    background: rgba(255, 255, 255, 0.58);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    ;
-    border-radius: 19px;
-    border: 1px solid #CCCCCC;
-    font-family: Poppins, sans-serif;
-    transition: all 0.3s ease;
-    padding-left: 1rem;
+.inputformfield {
+  /* position: absolute; */
+  padding-right: 10%;
+  height: 3rem;
+  left: 2%;
+  top: 11rem;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 19px;
+  border: 1px solid #cccccc;
+  font-family: Poppins, sans-serif;
+  transition: all 0.3s ease;
 }
 
 .formInput input:focus {
-    outline: none;
-    border: #268E95;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 0px 8px rgba(38, 142, 149, 0.5);
+  outline: none;
+  border: #268e95;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 0px 8px rgba(38, 142, 149, 0.5);
 }
 
 .formInput input:focus + label {
-    font-size: 16px;
-    top: 10px;
-    color: #268E95;
+  font-size: 16px;
+  top: 10px;
+  color: #268e95;
 }
 
 .formInput input::placeholder {
-    text-align: center;
-    left: 0;
-    top: 0;
-    font-family: 'Poppins';
-    color: rgba(38, 142, 149, 0.53);
-    font-size: 18px;
+  text-align: center;
+  left: 0;
+  top: 0;
+  font-family: "Poppins";
+  color: rgba(38, 142, 149, 0.53);
+  font-size: 18px;
 }
 
 .textButton {
-    position: relative;
-    width: 25%;
-    height: 130%;
-    left: 25%;
-    top: 9.5rem;
-    background: linear-gradient(79.97deg, #F9F9F9 33%, #B0FCFC 109.85%);
-    box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 53px;
-    color: #198783;
-    font-family: 'Poppins';
-    font-weight: 600;
-    border: 1px solid #45E3DA;
+  /* position: relative; */
+  font-size: 20px;
+  padding: 10px 60px;
+  left: 25%;
+  top: 9.5rem;
+  background: linear-gradient(79.97deg, #f9f9f9 33%, #b0fcfc 109.85%);
+  box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 53px;
+  color: #198783;
+  font-family: "Poppins";
+  font-weight: 600;
+  border: 1px solid #45e3da;
 }
 
-.text {
-    position: absolute;
-    width: 80%;
-    height: 2rem;
-    left: 10%;
-    top: 35rem;
-    font-weight: 400;
-    font-size: 1rem;
-    color: #FFFFFF;
+.registertext {
+  /* position: absolute; */
+  /* width: 80%; */
+  height: 2rem;
+  left: 10%;
+  font-weight: 400;
+  font-size: 1rem;
+  bottom: 3%;
+  color: #ffffff;
+  text-align: center;
 }
 
-.text a {
-    color: #00FFD1;
+.registertext a {
+  color: #00ffd1;
 }
+

@@ -1,128 +1,139 @@
 .LoginHeader {
-    width: 100%;
-    height: 100vh;
-    background-image: url("../images/plantbg.jpg");
+  width: 100%;
+  height: 100vh;
+  background-image: url("../images/plantbg.jpg");
+  background-size: cover;
 }
 
 .LoginSection {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 50px;
-    background:
-        linear-gradient(60.7deg, #97DECE -7.12%, #D0FFF9 48.76%, rgba(255, 255, 255, 0.94) 80.95%);
-    width: 45%;
-    height: 100%;
-    border-radius: 0px 37px 37px 0px;
-    box-shadow: 9px 6px 9px 3px rgba(0, 0, 0, 0.25);
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 20px;
+  background: linear-gradient(
+    60.7deg,
+    #97dece -7.12%,
+    #d0fff9 48.76%,
+    rgba(255, 255, 255, 0.94) 80.95%
+  );
+  width: 45%;
+  height: 100%;
+  border-radius: 0px 37px 37px 0px;
+  box-shadow: 9px 6px 9px 3px rgba(0, 0, 0, 0.25);
 }
 
-.appTitle {
-    position: absolute;
-    width: 90%;
-    height: 6rem;
-    left: -25%;
-    top: 2rem;
-    color: #268E95;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+.loginappTitle {
+  /* position: absolute; */
+  left: -25%;
+  top: 2rem;
+  color: #268e95;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .Email {
-    position: absolute;
-    width: 20%;
-    height: 6%;
-    left: 2%;
-    top: 35%;
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    color: #268E95;
-    padding-top: 30%;
+  /* position: absolute; */
+  width: 20%;
+  /* height: 6%; */
+  left: 2%;
+  top: 35%;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: flex;
+  color: #268e95;
+  /* padding-top: 30%; */
 }
 
 .Password {
-    position: absolute;
-    width: 20%;
-    height: 6%;
-    left: 2%;
-    top: 35%;
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    color: #268E95;
-    padding-top: 30%;
+  /* position: absolute; */
+  width: 20%;
+  /* height: 6%; */
+  left: 2%;
+  top: 35%;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: flex;
+  color: #268e95;
+  /* padding-top: 30%; */
 }
 
-.formInput {
-    position: relative;
-    margin-bottom: 128px;
-}
+/* .formInput {
+  position: relative;
+  padding-right: 10%;
+  margin-bottom: 128px;
+} */
 
-input {
-    position: absolute;
-    width: 400px;
-    height: 50px;
-    left: 10px;
-    top: 200px;
-    background: rgba(255, 255, 255, 0.58);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    ;
-    border-radius: 19px;
-    border: 1px solid #CCCCCC;
-    font-family: Poppins, sans-serif;
-    transition: all 0.3s ease;
-    padding-left: 20px;
+.inputformfield {
+  /* position: absolute; */
+  width: 100%;
+  height: 50px;
+  left: 10px;
+  top: 200px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 19px;
+  border: 1px solid #cccccc;
+  font-family: Poppins, sans-serif;
+  transition: all 0.3s ease;
+  padding-left: 20px;
 }
 
 .formInput input:focus {
-    outline: none;
-    border: #268E95;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 0px 8px rgba(38, 142, 149, 0.5);
+  outline: none;
+  border: #268e95;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 0px 8px rgba(38, 142, 149, 0.5);
 }
 
-.formInput input:focus+label {
-    font-size: 16px;
-    top: 10px;
-    color: #268E95;
+.formInput input:focus + label {
+  font-size: 16px;
+  top: 10px;
+  color: #268e95;
 }
 
 .formInput input::placeholder {
-    text-indent: 10px;
-    font-family: 'Poppins';
-    color: rgba(38, 142, 149, 0.3);
-    font-size: 18px;
+  text-indent: 10px;
+  font-family: "Poppins";
+  color: rgba(38, 142, 149, 0.3);
+  font-size: 18px;
+}
+
+.button {
+  align-self: center;
 }
 
 .Buttontext {
-    position: relative;
-    width: 25%;
-    height: 160%;
-    left: 30%;
-    top: 12.5rem;
-    font-family: 'Poppins';
-    background: linear-gradient(80.73deg, #217A86 38.26%, #45E3DA 121.51%);
-    box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 53px;
-    color: #CCCCCC;
-    font-weight: 600;
-    border: 1px solid #45E3DA;
+  /* position: relative; */
+  font-size: 20px;
+  padding: 10px 60px;
+  left: 30%;
+  top: 12.5rem;
+  font-family: "Poppins";
+  background: linear-gradient(80.73deg, #217a86 38.26%, #45e3da 121.51%);
+  box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0px 4px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 53px;
+  color: #cccccc;
+  font-weight: 600;
+  border: 1px solid #45e3da;
 }
 
 .Text {
-    position: absolute;
-    width: 80%;
-    height: 2rem;
-    left: 9%;
-    top: 34rem;
-    color: #268E95;
+  text-align: center;
+  /* position: absolute; */
+  height: 2rem;
+  left: 9%;
+  top: 34rem;
+  color: #268e95;
 }
 
 .Text a {
-    color: #02D8CB;
+  color: #02d8cb;
 }
