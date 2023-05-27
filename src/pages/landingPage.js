@@ -121,7 +121,7 @@ export default function landingPage() {
             <div className="sb__footer-below">
               <div className="sb__footer-copyright">
                 <p>
-                  @{new Date(). getFullYear()} LSKK Smart Farming Tracker
+                  @{new Date().getFullYear()} LSKK Smart Farming Tracker
                 </p>
               </div>
               <div className="sb__footer-terms">
