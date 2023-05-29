@@ -23,7 +23,7 @@ export default function LandingPage() {
             </p>
             <div className="headerButton">
               {cookies.token ? (
-                <Link href={`/dashboard`}>
+                <Link to={`/dashboard`}>
                   <button className="redirectButton">Maps</button>
                 </Link>
               ) : (
