@@ -54,7 +54,7 @@ export default function LoginPage() {
       .then((res) => {
         console.log(res);
         if (res.status) {
-          const cookies = response.headers["set-cookie"];
+          const cookies = res.headers["set-cookie"];
           console.log(cookies);
 
           // navigate("/dashboard");
