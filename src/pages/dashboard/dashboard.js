@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [selectedFarm, setSelectedFarm] = useState(null);
   const [sensorItemClicked, setSensorItemClicked] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
-  const [cookies, removeCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   let navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
