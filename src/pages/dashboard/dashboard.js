@@ -208,17 +208,15 @@ export default function Dashboard() {
           {!loaded && !mapLoaded && (
             <div className="loadingMap">Loading map...</div>
           )}
-          {farmData[0].name !== undefined &&
-            farmData.length === 0 &&
-            loaded && (
-              <div className="noFarms">
-                <p className="noFarmsText">Tidak ada lahan ditemukan!</p>
-                <Link to="/tambah-lahan">
-                  <button className="addFarmButton">Tambah Lahan</button>
-                </Link>
-              </div>
-            )}
-          {farmData[0].name !== undefined && loaded === true && (
+          {farmData.length === 0 && loaded && (
+            <div className="noFarms">
+              <p className="noFarmsText">Tidak ada lahan ditemukan!</p>
+              <Link to="/tambah-lahan">
+                <button className="addFarmButton">Tambah Lahan</button>
+              </Link>
+            </div>
+          )}
+          {farmData.length > 0 !== undefined && loaded === true && (
             <MapContainer
               center={[
                 parseFloat(farmData[0].longitude.$numberDecimal),
