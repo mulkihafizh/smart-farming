@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
-  const [cookies] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["token"]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -50,10 +50,14 @@ export default function LoginPage() {
       .then((res) => {
         console.log(res);
         if (res.status) {
-          const cookies = res.headers["set-cookie"];
-          console.log(cookies);
-
-          // navigate("/dashboard");
+          setCookie("token", res.data.token, {
+            path: "/",
+            maxAge: 36000,
+            sameSite: "none",
+            secure: true,
+            expires: new Date(Date.now() + 36000),
+          });
+          navigate("/dashboard");
         } else {
         }
       })
