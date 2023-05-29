@@ -4,7 +4,7 @@ import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -210,8 +210,10 @@ export default function Dashboard() {
           )}
           {farmData.length === 0 && loaded && (
             <div className="noFarms">
-              <p className="noFarmsText">No farms found</p>
-              <button className="addFarmButton">Add Farm</button>
+              <p className="noFarmsText">Tidak ada lahan ditemukan!</p>
+              <Link to="/tambah-lahan">
+                <button className="addFarmButton">Tambah Lahan</button>
+              </Link>
             </div>
           )}
           {farmData.length > 0 && loaded === true && (

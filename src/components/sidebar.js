@@ -66,7 +66,7 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
               </div>
             </div>
           ) : (
-            <p className="farm">No farm selected</p>
+            <p className="farm">Tidak ada lahan yang dipilih</p>
           )}
         </div>
       </div>

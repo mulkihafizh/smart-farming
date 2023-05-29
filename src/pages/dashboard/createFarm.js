@@ -117,13 +117,13 @@ export default function CreateFarm() {
         <div id="mapContainer" className="divided">
           <div className="createFormContainer">
             <div className="farmFormTitle">
-              <h1>Create Farm</h1>
+              <h1>Tambah Lahan</h1>
             </div>
             <div className="farmForm">
               <form method="POST" id="farmInputForm">
                 <div className="inputGroup">
                   <div className="inputGroup">
-                    <label htmlFor="farmName">Farm Name</label>
+                    <label htmlFor="farmName">Nama Lahan</label>
                     <input
                       type="text"
                       onChange={(e) => {
