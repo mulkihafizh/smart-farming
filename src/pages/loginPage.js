@@ -38,7 +38,7 @@ export default function LoginPage() {
 
     axios
       .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signin",
+        "http://localhost:8000/smart-farming/signin",
         {
           email: email,
           password: password,
@@ -47,6 +47,7 @@ export default function LoginPage() {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
+            "Set-Cookie": "HttpOnly;Secure;SameSite=Strict",
           },
         }
       )
