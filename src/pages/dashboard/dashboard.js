@@ -51,13 +51,13 @@ export default function Dashboard() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
           },
         }
       );
 
       const data = await myData;
       setFarmData(data.data.farm);
+      console.log("test");
 
       const mapContainer = document.getElementById("mapContainer");
       if (!cookies.token) {
