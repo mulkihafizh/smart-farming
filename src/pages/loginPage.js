@@ -43,6 +43,13 @@ export default function LoginPage() {
           email: email,
           password: password,
         },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       )
       .then((res) => {
         console.log(res);
