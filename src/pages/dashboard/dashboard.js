@@ -142,7 +142,7 @@ export default function Dashboard() {
     return () => {
       observer.disconnect();
     };
-  }, [cookies.token]);
+  }, [cookies.token, navigate]);
 
   const handleSensorItemClick = (sensorName) => {
     setSelectedSensor((prevSensor) =>
