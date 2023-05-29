@@ -158,7 +158,7 @@ export default function Dashboard() {
     e.preventDefault();
     axios
       .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signout",
+        "http://localhost:8000/smart-farming/signout",
         {
           headers: {
             "Content-Type": "application/json",

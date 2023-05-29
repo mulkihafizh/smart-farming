@@ -54,7 +54,7 @@ export default function LoginPage() {
       .then((res) => {
         console.log(res);
         if (res.status) {
-          navigate("/dashboard");
+          // navigate("/dashboard");
         } else {
         }
       })
