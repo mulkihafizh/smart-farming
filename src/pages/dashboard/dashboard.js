@@ -25,14 +25,10 @@ export default function Dashboard() {
   const [farmData, setFarmData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
 
   const handleMapReady = () => {
     setMapLoaded(true);
-  };
-  const handleLoading = () => {
-    setLoading(false);
   };
 
   // const handleMarkerClick = (farm) => {
@@ -63,7 +59,7 @@ export default function Dashboard() {
         console.log(res);
         setFarmData(res.data.farm);
         setUser(res.data.user);
-        console.log("asd");
+        setLoaded(true);
       });
 
     const mapContainer = document.getElementById("mapContainer");
@@ -90,7 +86,6 @@ export default function Dashboard() {
     if (mapContainer) {
       observer.observe(mapContainer, { childList: true });
     }
-    setLoaded(true);
 
     return () => {
       observer.disconnect();
@@ -209,12 +204,10 @@ export default function Dashboard() {
               </div>
             </div>
           )}
-          {loading && !loaded && !mapLoaded && (
-            <div className="loadingMap" whenReady={handleLoading}>
-              Loading map...
-            </div>
+          {!loaded && !mapLoaded && (
+            <div className="loadingMap">Loading map...</div>
           )}
-          {!loading && farmData.length === 0 && loaded && (
+          {farmData.length === 0 && loaded && (
             <div className="noFarms">
               <p className="noFarmsText">Tidak ada lahan ditemukan!</p>
               <Link to="/tambah-lahan">
