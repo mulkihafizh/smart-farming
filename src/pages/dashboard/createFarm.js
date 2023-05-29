@@ -70,7 +70,6 @@ export default function CreateFarm() {
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");
-        } else {
         }
       })
       .catch((err) => {
