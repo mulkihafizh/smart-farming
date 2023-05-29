@@ -44,10 +44,7 @@ export default function LoginPage() {
           password: password,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-            withCredentials: true,
-          },
+          withCredentials: true,
         }
       )
       .then((res) => {
