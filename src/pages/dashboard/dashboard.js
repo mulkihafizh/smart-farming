@@ -44,52 +44,51 @@ export default function Dashboard() {
     setShowDropdown(!showDropdown);
   };
 
-  useEffect(
-    () => async () => {
-      const myData = axios.get(
+  useEffect(() => {
+    axios
+      .get(
         "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/dashboard",
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
-      );
+      )
+      .then((res) => {
+        console.log(res);
+        setFarmData(res.data.farm);
+      });
 
-      const data = await myData;
-      setFarmData(data.data.farm);
+    const mapContainer = document.getElementById("mapContainer");
+    if (!cookies.token) {
+      navigate("/login");
+    }
 
-      const mapContainer = document.getElementById("mapContainer");
-      if (!cookies.token) {
-        navigate("/login");
-      }
-
-      const observer = new MutationObserver((mutationsList) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === "childList") {
-            const sensorDetails = mapContainer.querySelector(".sensorDetails");
-            if (!sensorDetails) {
-              console.log("Sensor details not found");
-              try {
-                setSelectedSensor(null);
-              } catch (err) {
-                console.log(err);
-              }
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          const sensorDetails = mapContainer.querySelector(".sensorDetails");
+          if (!sensorDetails) {
+            console.log("Sensor details not found");
+            try {
+              setSelectedSensor(null);
+            } catch (err) {
+              console.log(err);
             }
           }
         }
-      });
-
-      if (mapContainer) {
-        observer.observe(mapContainer, { childList: true });
       }
-      setLoaded(true);
+    });
 
-      return () => {
-        observer.disconnect();
-      };
-    },
-    [cookies.token, navigate]
-  );
+    if (mapContainer) {
+      observer.observe(mapContainer, { childList: true });
+    }
+    setLoaded(true);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [cookies.token, navigate]);
 
   console.log("test");
 
