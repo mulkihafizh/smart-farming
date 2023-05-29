@@ -57,7 +57,6 @@ export default function Dashboard() {
 
       const data = await myData;
       setFarmData(data.data.farm);
-      console.log("test");
 
       const mapContainer = document.getElementById("mapContainer");
       if (!cookies.token) {
@@ -91,6 +90,8 @@ export default function Dashboard() {
     },
     [cookies.token, navigate]
   );
+
+  console.log("test");
 
   if (loaded && farmData) {
     console.log(!farmData[0].latitude.$numberDecimal);
