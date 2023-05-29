@@ -3,7 +3,7 @@ import "../assets/css/landing.css";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-export default function landingPage() {
+export default function LandingPage() {
   const [cookies] = useCookies(["token"]);
 
   return (
