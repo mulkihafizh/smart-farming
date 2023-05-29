@@ -71,10 +71,13 @@ export default function CreateFarm() {
         if (res.data.success) {
           navigate("/dashboard");
         } else {
-          setIsError(true);
-          setToastMessage(res.data.message);
-          setShowToast(true);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsError(true);
+        setToastMessage(res.data.message);
+        setShowToast(true);
       });
   };
   return (
