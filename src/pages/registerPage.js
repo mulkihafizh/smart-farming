@@ -58,7 +58,7 @@ export default function RegisterPage() {
       .catch((err) => {
         console.log(err);
         setIsError(true);
-        setToastMessage(err.response.data.message);
+        setToastMessage(err.response.data.error);
         setShowToast(true);
         setIsLoading(true);
       });
