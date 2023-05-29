@@ -47,7 +47,6 @@ export default function LoginPage() {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            "Set-Cookie": "HttpOnly;Secure;SameSite=Strict",
           },
         }
       )
