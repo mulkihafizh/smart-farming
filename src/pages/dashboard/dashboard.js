@@ -216,7 +216,7 @@ export default function Dashboard() {
               </Link>
             </div>
           )}
-          {farmData.length > 0 !== undefined && loaded === true && (
+          {farmData.length > 0 && farmData !== [] && loaded === true && (
             <MapContainer
               center={[
                 parseFloat(farmData[0].longitude.$numberDecimal),
