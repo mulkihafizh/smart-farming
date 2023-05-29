@@ -4,8 +4,9 @@ import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import axios from "axios";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -19,8 +20,9 @@ export default function Dashboard() {
   const [selectedFarm, setSelectedFarm] = useState(null);
   const [sensorItemClicked, setSensorItemClicked] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
-  const [cookies] = useCookies(["token"]);
-  // let navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies(["token"]);
+  let navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const farmData = [
     {
@@ -106,11 +108,15 @@ export default function Dashboard() {
     }
   };
 
+  const handleProfileClick = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   useEffect(() => {
     console.log("Dashboard mounted");
     const mapContainer = document.getElementById("mapContainer");
     if (!cookies.token) {
-      // navigate("/error-access");
+      navigate("/login");
     }
 
     const observer = new MutationObserver((mutationsList) => {
@@ -146,6 +152,29 @@ export default function Dashboard() {
       sensorName === selectedSensor ? !prevState : true
     );
   };
+  axios.defaults.withCredentials = true;
+  const handleLogout = (e) => {
+    console.log("asdas");
+    e.preventDefault();
+    axios
+      .post(
+        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signout",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.success) {
+          navigate("/login");
+        }
+      });
+  };
 
   return (
     <div className="mainContainer">
@@ -161,7 +190,7 @@ export default function Dashboard() {
             <input type="text" className="searchBar" />
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
-          <div className="userProfile">
+          <div className="userProfile" onClick={handleProfileClick}>
             <p className="userName">Pendleton</p>
             <img
               className="userProfilePic"
@@ -169,6 +198,13 @@ export default function Dashboard() {
               alt=""
             />
           </div>
+          {showDropdown && (
+            <div className="dropdown">
+              <button className="logoutButton" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          )}
         </header>
         <div
           id="mapContainer"

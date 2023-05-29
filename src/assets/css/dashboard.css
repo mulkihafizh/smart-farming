@@ -36,6 +36,27 @@
   border-bottom: 1px solid #e0e0e0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  position: relative;
+}
+
+.dropdown {
+  background-color: white;
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  border-radius: 20px;
+  padding: 5px 15px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+}
+
+.dropdown button {
+  border: none;
+  background-color: white;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #268e95;
 }
 .mainContainer {
   display: grid;
@@ -173,7 +194,7 @@
   align-items: center;
   height: 100vh;
   padding: 10px;
-  background: #8bb9d1;
+  background: #01535e;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
   z-index: 999;
 }
@@ -223,6 +244,7 @@
   gap: 10px;
   width: 100%;
   padding: 0px 20px;
+  flex-grow: 1;
 }
 
 .farm {
@@ -230,6 +252,7 @@
   color: #000;
   border-radius: 20px;
   padding: 20px;
+  flex-grow: 1;
 }
 
 .farmName {
@@ -501,8 +524,6 @@
   font-size: 16px;
   border: 0.5px solid #000;
 }
-
-
 
 .inputGroup select {
   padding: 10px;
