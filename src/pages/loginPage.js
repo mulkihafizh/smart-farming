@@ -38,7 +38,7 @@ export default function LoginPage() {
 
     axios
       .post(
-        "http://localhost:8000/smart-farming/signin",
+        "https://storied-semifreddo-96a80f.netlify.app/smart-farming/signin",
         {
           email: email,
           password: password,
