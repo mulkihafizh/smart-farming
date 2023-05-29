@@ -20,7 +20,7 @@ export default function Dashboard() {
   // const [selectedFarm, setSelectedFarm] = useState(null);
   const [sensorItemClicked, setSensorItemClicked] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
-  const [cookies] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
   const [farmData, setFarmData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -119,6 +119,7 @@ export default function Dashboard() {
       .then((response) => {
         console.log(response);
         if (response.data.success) {
+          setCookie("token", "", { path: "/", maxAge: 0 });
           navigate("/login");
         }
       });
@@ -193,7 +194,7 @@ export default function Dashboard() {
             </div>
           )}
           {!mapLoaded && <div>Loading map...</div>}
-          {farmData.length === 0 && loaded && (
+          {mapLoaded && farmData.length === 0 && loaded && (
             <div className="noFarms">
               <p className="noFarmsText">No farms found</p>
               <button className="addFarmButton">Add Farm</button>
