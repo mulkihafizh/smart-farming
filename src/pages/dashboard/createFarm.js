@@ -36,7 +36,7 @@ export default function CreateFarm() {
   ];
 
   useEffect(() => {
-    if (cookies.token) {
+    if (!cookies.token) {
       navigate("/dashboard");
     }
   }, [cookies.token, navigate]);
