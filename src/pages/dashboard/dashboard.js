@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [farmData, setFarmData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [user, setUser] = useState([]);
 
   const handleMapReady = () => {
     setMapLoaded(true);
@@ -57,6 +58,7 @@ export default function Dashboard() {
       .then((res) => {
         console.log(res);
         setFarmData(res.data.farm);
+        setUser(res.data.user);
         console.log("asd");
       });
 
@@ -110,6 +112,7 @@ export default function Dashboard() {
         {
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
           },
         },
         {
@@ -139,12 +142,21 @@ export default function Dashboard() {
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
           <div className="userProfile" onClick={handleProfileClick}>
-            <p className="userName">Pendleton</p>
-            <img
-              className="userProfilePic"
-              src="https://img.wattpad.com/5edad7765319cd862679ee6a481c19eadb22a39f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f3979324d3941414a6b64685359673d3d2d3838363634363239372e313630666132353063336133306534623333383235373633393935362e6a7067?s=fit&w=720&h=720"
-              alt=""
-            />
+            {user.username !== undefined ? (
+              <>
+                <p className="userName">
+                  {user.username.charAt(0).toUpperCase() +
+                    user.username.slice(1)}
+                </p>
+                <img
+                  className="userProfilePic"
+                  src="https://img.wattpad.com/5edad7765319cd862679ee6a481c19eadb22a39f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f3979324d3941414a6b64685359673d3d2d3838363634363239372e313630666132353063336133306534623333383235373633393935362e6a7067?s=fit&w=720&h=720"
+                  alt=""
+                />
+              </>
+            ) : (
+              <p className="userName">Loading....</p>
+            )}
           </div>
           {showDropdown && (
             <div className="dropdown">
@@ -193,8 +205,10 @@ export default function Dashboard() {
               </div>
             </div>
           )}
-          {!mapLoaded && <div>Loading map...</div>}
-          {mapLoaded && farmData.length === 0 && loaded && (
+          {!loaded && !mapLoaded && (
+            <div className="loadingMap">Loading map...</div>
+          )}
+          {farmData.length === 0 && loaded && (
             <div className="noFarms">
               <p className="noFarmsText">No farms found</p>
               <button className="addFarmButton">Add Farm</button>
