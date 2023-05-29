@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -35,13 +35,18 @@ export default function CreateFarm() {
     },
   ];
 
+  useEffect(() => {
+    if (cookies.token) {
+      navigate("/dashboard");
+    }
+  }, [cookies.token, navigate]);
+
   const handleMapReady = () => {
     setMapLoaded(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userId = cookies.token;
 
     if (!name || !type || !area || !longitude || !latitude) {
       setIsError(true);
@@ -75,7 +80,7 @@ export default function CreateFarm() {
       .catch((err) => {
         console.log(err);
         setIsError(true);
-        setToastMessage(res.data.message);
+        setToastMessage(err.response.data.error);
         setShowToast(true);
       });
   };
