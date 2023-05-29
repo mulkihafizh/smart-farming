@@ -57,6 +57,7 @@ export default function Dashboard() {
       .then((res) => {
         console.log(res);
         setFarmData(res.data.farm);
+        console.log("asd");
       });
 
     const mapContainer = document.getElementById("mapContainer");
