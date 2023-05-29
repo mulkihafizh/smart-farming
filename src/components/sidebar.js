@@ -7,9 +7,9 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
   const handleSidebarClicked = () => {
     setSidebar((prevState) => !prevState);
   };
-  const handleSensorClick = (sensorName) => {
-    onSensorItemClick(sensorName);
-  };
+  // const handleSensorClick = (sensorName) => {
+  //   onSensorItemClick(sensorName);
+  // };
 
   return (
     <div className="leftSide">
@@ -45,8 +45,7 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
               </div>
               <div className="sideItems">
                 <a href="/sensor-form" className="itemTitle">
-                  <i className="fa-solid fa-plus"></i>{" "}
-                  <p>Tambah Sensor</p>
+                  <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
                 </a>
               </div>
               <div className="sideItems">
@@ -55,13 +54,13 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
                 </div>
                 <div className="items">
                   <ul>
-                    {selectedFarm.sensors.map((sensor, index) => (
+                    {/* {selectedFarm.sensors.map((sensor, index) => (
                       <li key={index}>
                         <p onClick={() => handleSensorClick(sensor.name)}>
                           {sensor.name}
                         </p>
                       </li>
-                    ))}
+                    ))} */}
                   </ul>
                 </div>
               </div>

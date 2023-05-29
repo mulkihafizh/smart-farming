@@ -3,6 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -12,7 +15,15 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function CreateFarm() {
+  let navigate = useNavigate();
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [area, setArea] = useState("");
+  const [longitude, setLong] = useState("");
+  const [latitude, setLat] = useState("");
+  const [cookies] = useCookies(["token"]);
+
   const farmData = [
     {
       name: "Farm 1",
@@ -71,6 +82,35 @@ export default function CreateFarm() {
   const handleMapReady = () => {
     setMapLoaded(true);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userId = cookies.token;
+    console.log(userId);
+    const data = {
+      name: name,
+      type: type,
+      farmArea: area,
+      longitude: longitude,
+      latitude: latitude,
+    };
+    axios
+      .post(
+        "https://smartfarming-api-mulkihafizh.vercel.app/farm/create",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          navigate("/dashboard");
+        }
+      });
+  };
   return (
     <div id="create">
       <div className="createFarm">
@@ -84,29 +124,59 @@ export default function CreateFarm() {
                 <div className="inputGroup">
                   <div className="inputGroup">
                     <label htmlFor="farmName">Farm Name</label>
-                    <input type="text" name="farmName" id="farmName" />
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      id="farmName"
+                    />
                   </div>
                   <div className="inputGroup">
                     <label htmlFor="farmName">Luas Lahan</label>
-                    <input type="text" name="farmName" id="farmName" />
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setArea(e.target.value);
+                      }}
+                      id="farmArea"
+                    />
                   </div>
                   <div className="inputGroup">
                     <label htmlFor="farmName">Jenis Tanaman</label>
-                    <input type="text" name="farmName" id="farmName" />
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setType(e.target.value);
+                      }}
+                      id="farmType"
+                    />
                   </div>
                   <div className="inputGroups">
                     <div className="inputGroup">
-                      <label htmlFor="farmName">Jenis Tanaman</label>
-                      <input type="text" name="farmName" id="farmName" />
+                      <label htmlFor="farmName">Longitude</label>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setLong(e.target.value);
+                        }}
+                        id="farmLong"
+                      />
                     </div>
                     <div className="inputGroup">
-                      <label htmlFor="farmName">Jenis Tanaman</label>
-                      <input type="text" name="farmName" id="farmName" />
+                      <label htmlFor="farmName">Latitude</label>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setLat(e.target.value);
+                        }}
+                        id="farmLat"
+                      />
                     </div>
                   </div>
                 </div>
                 <div className="farmSubmitButton">
-                  <button type="submit" form="farmInputForm">
+                  <button type="submit" onClick={handleSubmit}>
                     Submit
                   </button>
                 </div>
