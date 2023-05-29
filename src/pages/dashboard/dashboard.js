@@ -93,10 +93,6 @@ export default function Dashboard() {
 
   console.log("test");
 
-  if (loaded && farmData) {
-    console.log(!farmData[0].latitude.$numberDecimal);
-  }
-
   const handleSensorItemClick = (sensorName) => {
     setSelectedSensor((prevSensor) =>
       prevSensor === sensorName ? null : sensorName
