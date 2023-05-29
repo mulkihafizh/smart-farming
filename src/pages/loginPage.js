@@ -38,7 +38,7 @@ export default function LoginPage() {
 
     axios
       .post(
-        "https://storied-semifreddo-96a80f.netlify.app/smart-farming/signin",
+        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signin",
         {
           email: email,
           password: password,
