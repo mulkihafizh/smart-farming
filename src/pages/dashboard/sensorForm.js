@@ -15,13 +15,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
-class ExtendedMarker extends Marker {
-  componentDidMount() {
-    super.componentDidMount();
-
-    this.leafletElement.openPopup();
-  }
-}
 
 export default function SensorFarm() {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -191,7 +184,7 @@ export default function SensorFarm() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution=""
               />
-              <ExtendedMarker
+              <Marker
                 position={[
                   farm.longitude.$numberDecimal,
                   farm.latitude.$numberDecimal,
@@ -204,7 +197,7 @@ export default function SensorFarm() {
                     <p>Latitude: {farm.latitude.$numberDecimal}</p>
                   </div>
                 </Popup>
-              </ExtendedMarker>
+              </Marker>
             </MapContainer>
           )}
         </div>
