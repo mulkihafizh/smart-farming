@@ -17,32 +17,33 @@ L.Icon.Default.mergeOptions({
 
 export default function Dashboard() {
   const [mapLoaded, setMapLoaded] = useState(false);
-  // const [selectedFarm, setSelectedFarm] = useState(null);
-  const [sensorItemClicked, setSensorItemClicked] = useState(false);
-  const [selectedSensor, setSelectedSensor] = useState(null);
+  const [selectedFarm, setSelectedFarm] = useState(null);
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
   const [farmData, setFarmData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [user, setUser] = useState([]);
+  const [sensor, setSensor] = useState([]);
+  const [selectedSensors, setSelectedSensor] = useState([]);
+  const [clickedSensor, setClickedSensor] = useState("");
+  const [details, setDetails] = useState(false);
 
   const handleMapReady = () => {
     setMapLoaded(true);
   };
 
-  // const handleMarkerClick = (farm) => {
-  //   if (selectedFarm !== farm) {
-  //     setSelectedFarm(farm);
-  //     setSelectedSensor(null);
-  //     setSensorItemClicked(false);
-  //   } else {
-  //     setSensorItemClicked((prevValue) => !prevValue);
-  //   }
-  // };
-
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleFarmClick = (farm) => {
+    const farmId = farm._id;
+    setSelectedFarm((prevFarm) => (prevFarm === farm ? null : farm));
+    const filteredSensor = sensor.filter(
+      (sensor) => sensor._farm_id === farmId
+    );
+    setSelectedSensor(filteredSensor);
   };
 
   useEffect(() => {
@@ -59,6 +60,12 @@ export default function Dashboard() {
         console.log(res);
         setFarmData(res.data.farm);
         setUser(res.data.user);
+        setSensor(res.data.sensor);
+        setCookie("userId", res.data.user._id, {
+          path: "/",
+          sameSite: "none",
+          secure: true,
+        });
         setLoaded(true);
       });
 
@@ -74,7 +81,7 @@ export default function Dashboard() {
           if (!sensorDetails) {
             console.log("Sensor details not found");
             try {
-              setSelectedSensor(null);
+              setClickedSensor(null);
             } catch (err) {
               console.log(err);
             }
@@ -90,18 +97,14 @@ export default function Dashboard() {
     return () => {
       observer.disconnect();
     };
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate, setCookie]);
 
-  console.log("test");
-
-  const handleSensorItemClick = (sensorName) => {
-    setSelectedSensor((prevSensor) =>
-      prevSensor === sensorName ? null : sensorName
-    );
-    setSensorItemClicked((prevState) =>
-      sensorName === selectedSensor ? !prevState : true
-    );
+  const handleSensorItemClick = (sensorId) => {
+    setClickedSensor((prevSensor) => (prevSensor === sensorId ? "" : sensorId));
+    const selectedDetail = sensor.filter((farm) => farm._id === sensorId)[0];
+    setDetails(selectedDetail);
   };
+
   axios.defaults.withCredentials = true;
   const handleLogout = (e) => {
     e.preventDefault();
@@ -121,6 +124,7 @@ export default function Dashboard() {
       .then((response) => {
         console.log(response);
         if (response.data.success) {
+          setCookie("userId", "", { path: "/", maxAge: 0 });
           setCookie("token", "", { path: "/", maxAge: 0 });
           navigate("/login");
         }
@@ -130,9 +134,9 @@ export default function Dashboard() {
   return (
     <div className="mainContainer">
       <SideBar
-        selectedSensor={selectedSensor}
-        // selectedFarm={selectedFarm}
-        onSensorItemClick={handleSensorItemClick}
+        selectedSensor={selectedSensors}
+        selectedFarm={selectedFarm}
+        handleSensorItemClick={handleSensorItemClick}
       />
       <div className="rightSide">
         <header id="dashboardHead">
@@ -165,42 +169,15 @@ export default function Dashboard() {
             </div>
           )}
         </header>
-        <div
-          id="mapContainer"
-          className={`${sensorItemClicked ? "divided" : ""}`}
-        >
-          {sensorItemClicked && (
+        <div id="mapContainer" className={`${clickedSensor ? "divided" : ""}`}>
+          {clickedSensor && details && (
             <div className="sensorDetails">
               <div className="sensorTitle">
-                <p className="sensorName">{selectedSensor}</p>
+                <p className="sensorName">{details.type}</p>
               </div>
               <div className="sensorData">
                 <p className="historyMain">History :</p>
-                <div className="historyItems">
-                  {/* {selectedFarm.sensors.map((sensor) => {
-                    if (sensor.name === selectedSensor) {
-                      if (sensor.history.length === 0) {
-                        return (
-                          <p className="noHistory">
-                            No history found on {selectedSensor}
-                          </p>
-                        );
-                      } else {
-                        return sensor.history.map((historyItem, index) => (
-                          <div className="historyItem" key={index}>
-                            <p className="historyTitle">{historyItem.title}</p>
-                            <p className="historyDate">{historyItem.date}</p>
-
-                            <p className="historyDesc">
-                              {historyItem.description}
-                            </p>
-                          </div>
-                        ));
-                      }
-                    }
-                    return null;
-                  })} */}
-                </div>
+                <div className="historyItems"></div>
               </div>
             </div>
           )}
@@ -239,9 +216,9 @@ export default function Dashboard() {
                         parseFloat(farm.longitude.$numberDecimal),
                         parseFloat(farm.latitude.$numberDecimal),
                       ]}
-                      // eventHandlers={{
-                      //   click: () => handleMarkerClick(farm),
-                      // }}
+                      eventHandlers={{
+                        click: () => handleFarmClick(farm),
+                      }}
                     >
                       <Popup>
                         Name: {farm.name}

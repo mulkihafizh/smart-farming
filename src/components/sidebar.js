@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({ selectedFarm, onSensorItemClick }) {
+export default function Sidebar({
+  selectedFarm,
+  selectedSensor,
+  handleSensorItemClick,
+}) {
   const [handleSidebar, setSidebar] = useState(true);
+  const [clickedSensor, setClickedSensor] = useState(null);
 
   const handleSidebarClicked = () => {
     setSidebar((prevState) => !prevState);
   };
-  // const handleSensorClick = (sensorName) => {
-  //   onSensorItemClick(sensorName);
-  // };
+  const handleSensorClick = (sensorId) => {
+    setClickedSensor(sensorId);
+    handleSensorItemClick(sensorId);
+  };
 
   return (
     <div className="leftSide">
@@ -30,7 +36,7 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
         </div>
         <div className="sidebarMenu">
           <div className="addFarmItem">
-            <Link to={"/tambah-lahan"}>
+            <Link to={`/tambah-lahan`}>
               <i className="fa-solid fa-plus"></i> <p>Tambah Lahan</p>
             </Link>
           </div>
@@ -44,9 +50,12 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
                 </a>
               </div>
               <div className="sideItems">
-                <a href="/sensor-form" className="itemTitle">
+                <Link
+                  to={`/tambah-sensor/${selectedFarm._id}`}
+                  className="itemTitle"
+                >
                   <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
-                </a>
+                </Link>
               </div>
               <div className="sideItems">
                 <div href="" className="itemTitle">
@@ -54,13 +63,20 @@ export default function Sidebar({ selectedFarm, onSensorItemClick }) {
                 </div>
                 <div className="items">
                   <ul>
-                    {/* {selectedFarm.sensors.map((sensor, index) => (
-                      <li key={index}>
-                        <p onClick={() => handleSensorClick(sensor.name)}>
-                          {sensor.name}
-                        </p>
-                      </li>
-                    ))} */}
+                    {selectedSensor.length > 0 &&
+                      selectedSensor.map((sensor) => (
+                        <li key={sensor._id}>
+                          <p
+                            onClick={() => handleSensorClick(sensor._id)}
+                            className={
+                              clickedSensor === sensor._id ? "selected" : ""
+                            }
+                          >
+                            {sensor.name}
+                          </p>
+                        </li>
+                      ))}
+                    {selectedSensor.length === 0 && <p>Tidak ada sensor</p>}
                   </ul>
                 </div>
               </div>

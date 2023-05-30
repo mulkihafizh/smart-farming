@@ -55,10 +55,8 @@ export default function LoginPage() {
             maxAge: 36000,
             sameSite: "none",
             secure: true,
-            expires: new Date(Date.now() + 36000),
           });
           navigate("/dashboard");
-        } else {
         }
       })
       .catch((err) => {

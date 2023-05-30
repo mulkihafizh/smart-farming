@@ -4,10 +4,8 @@ import RegisterPage from "./pages/registerPage";
 import LoginPage from "./pages/loginPage";
 import CreateFarm from "./pages/dashboard/createFarm";
 import LoginFirst from "./pages/errors/loginFirst";
-import CreateSensor from "./pages/dashboard/createSensor";
+import CreateSensor from "./pages/dashboard/sensorForm";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SensorFarm from "./pages/dashboard/sensorForm";
-
 
 const router = createBrowserRouter([
   {
@@ -51,7 +49,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/tambah-sensor",
+    path: "/tambah-sensor/:farmId",
     element: (
       <>
         <CreateSensor />
@@ -66,30 +64,6 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: "/sensor-form",
-    element: (
-      <>
-        <SensorFarm />
-      </>
-    ),
-  },
-  // {
-  //   path: "/login",
-  //   element: (
-  //     <>
-  //       <LoginPage />
-  //     </>
-  //   )
-  // },
-  // {
-  //   path: "/register",
-  //   element: (
-  //     <>
-  //       <RegisterPage />
-  //     </>
-  //   )
-  // }
 ]);
 
 function App() {

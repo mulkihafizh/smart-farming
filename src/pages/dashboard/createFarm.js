@@ -4,7 +4,7 @@ import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Toast from "../../components/toast";
 
@@ -17,7 +17,6 @@ L.Icon.Default.mergeOptions({
 
 export default function CreateFarm() {
   let navigate = useNavigate();
-  const [mapLoaded, setMapLoaded] = useState(false);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [area, setArea] = useState("");
@@ -28,22 +27,11 @@ export default function CreateFarm() {
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
-  const farmData = [
-    {
-      latitude: -6.929556,
-      longitude: 107.627139,
-    },
-  ];
-
   useEffect(() => {
     if (!cookies.token) {
       navigate("/dashboard");
     }
   }, [cookies.token, navigate]);
-
-  const handleMapReady = () => {
-    setMapLoaded(true);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,17 +72,21 @@ export default function CreateFarm() {
         setShowToast(true);
       });
   };
+
   return (
     <div id="create">
+      <Link to={`/dashboard`}>
+        <i className="fa-solid fa-arrow-left backIcon"></i>
+      </Link>
       {showToast && <Toast isError={isError} message={toastMessage} />}
-      <div className="createFarm">
-        <div id="mapContainer" className="divided">
+      <div className="createForm">
+        <div id="mapContainer" className="formDivided">
           <div className="createFormContainer">
             <div className="farmFormTitle">
               <h1>Tambah Lahan</h1>
             </div>
             <div className="farmForm">
-              <form method="POST" id="farmInputForm">
+              <form id="farmInputForm">
                 <div className="inputGroup">
                   <div className="inputGroup">
                     <label htmlFor="farmName">Nama Lahan</label>
@@ -158,24 +150,24 @@ export default function CreateFarm() {
             </div>
           </div>
 
-          {!mapLoaded && <div>Loading map...</div>}
-          <MapContainer
-            center={[-6.929543, 107.627141]}
-            zoom={15}
-            style={{ height: "100%", borderRadius: "20px" }}
-            whenReady={handleMapReady}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution=""
-            />
-            {farmData.map((farm, index) => (
-              <Marker
-                key={index}
-                position={[farm.latitude, farm.longitude]}
-              ></Marker>
+          {(!latitude && !longitude) ||
+            ((!latitude || !longitude) && (
+              <div className="loadingMap">Masukkan Longitude dan Latitude!</div>
             ))}
-          </MapContainer>
+          {latitude && longitude && (
+            <MapContainer
+              center={[longitude, latitude]}
+              zoom={15}
+              style={{ height: "100%", borderRadius: "20px" }}
+              className="formMap"
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution=""
+              />
+              <Marker position={[longitude, latitude]}></Marker>
+            </MapContainer>
+          )}
         </div>
       </div>
     </div>

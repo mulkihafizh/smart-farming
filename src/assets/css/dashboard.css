@@ -17,6 +17,15 @@
   }
 }
 
+@media (min-width: 728px) {
+  .formDivided {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
 .fa-magnifying-glass {
   border-left: 2px solid #000;
   padding-left: 10px;
@@ -358,6 +367,13 @@
     height: 92vh;
   }
 
+  #create #mapContainer {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+  }
+
   .sensorDetails {
     grid-row-start: 2;
     height: 100%;
@@ -575,4 +591,26 @@
   cursor: pointer;
   border: none;
   box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 727px) {
+  #create #mapContainer {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    grid-template-rows: 2fr 1fr;
+  }
+}
+
+.backIcon {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+  z-index: 999;
+  font-size: 30px;
+  color: #000;
+}
+
+.formMap .leaflet-popup-close-button {
+  display: none;
 }
