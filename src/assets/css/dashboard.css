@@ -421,7 +421,7 @@
 
   #sidebar {
     z-index: 999;
-    width: 50%;
+    width: 30%;
     position: absolute;
   }
   .historyMain {
@@ -478,7 +478,7 @@
 
 @media (max-width: 768px) {
   #sidebar {
-    width: 40%;
+    width: 50%;
     z-index: 999;
     position: absolute;
   }
