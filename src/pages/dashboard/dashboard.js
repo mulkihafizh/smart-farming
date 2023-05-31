@@ -28,7 +28,9 @@ export default function Dashboard() {
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
   const [details, setDetails] = useState(false);
+  const [histories, setHistories] = useState([]);
   const [loggingOut, setLogout] = useState(false);
+  const [selectedHistory, setSelectedHistory] = useState([]);
 
   const handleMapReady = () => {
     setMapLoaded(true);
@@ -62,6 +64,7 @@ export default function Dashboard() {
         setFarmData(res.data.farm);
         setUser(res.data.user);
         setSensor(res.data.sensor);
+        setHistories(res.data.history);
         setCookie("userId", res.data.user._id, {
           path: "/",
           sameSite: "none",
@@ -104,6 +107,10 @@ export default function Dashboard() {
     setClickedSensor((prevSensor) => (prevSensor === sensorId ? "" : sensorId));
     const selectedDetail = sensor.filter((farm) => farm._id === sensorId)[0];
     setDetails(selectedDetail);
+    const history = histories.filter(
+      (history) => history._sensor_id === sensorId
+    );
+    setSelectedHistory(history);
   };
 
   axios.defaults.withCredentials = true;
@@ -186,7 +193,28 @@ export default function Dashboard() {
               </div>
               <div className="sensorData">
                 <p className="historyMain">History :</p>
-                <div className="historyItems"></div>
+                <div className="historyItems">
+                  {histories.length === 0 ||
+                    (selectedHistory.length === 0 && <p>No History</p>)}
+                  {histories.length > 0 &&
+                    selectedHistory.length > 0 &&
+                    selectedHistory.map((history) => (
+                      <div className="historyItem" key={history._id}>
+                        <p className="historyTitle">{history.title}</p>
+                        <p className="historyDate">
+                          {new Date(history.date)
+                            .toLocaleDateString("id-ID", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })
+                            .split(" ")
+                            .join("-")}
+                        </p>
+                        <p className="historyDesc">{history.description}</p>
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
           )}
