@@ -57,6 +57,16 @@
   padding: 5px 15px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 9999;
+  animation: slideBottom 0.3s;
+}
+
+@keyframes slideBottom {
+  0% {
+    transform: translateY(-200%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 .dropdown button {
@@ -66,12 +76,13 @@
   font-size: 16px;
   font-weight: 500;
   color: #268e95;
+  cursor: pointer;
 }
 .mainContainer {
   display: grid;
   grid-template-columns: 1fr 4fr;
   height: 100vh;
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
 
 .userProfile {
@@ -80,10 +91,28 @@
   display: flex;
   justify-content: flex-end;
   grid-column-start: 3;
+  cursor: pointer;
 }
 
 .userName {
   font-size: 20px;
+}
+
+.loadingLogout {
+  background: #00000076;
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingcard {
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: 20px;
 }
 
 .userProfilePic {

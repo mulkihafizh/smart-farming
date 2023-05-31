@@ -28,6 +28,7 @@ export default function Dashboard() {
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
   const [details, setDetails] = useState(false);
+  const [loggingOut, setLogout] = useState(false);
 
   const handleMapReady = () => {
     setMapLoaded(true);
@@ -108,6 +109,7 @@ export default function Dashboard() {
   axios.defaults.withCredentials = true;
   const handleLogout = (e) => {
     e.preventDefault();
+    setLogout(true);
     axios
       .post(
         "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signout",
@@ -133,6 +135,13 @@ export default function Dashboard() {
 
   return (
     <div className="mainContainer">
+      {loggingOut && (
+        <div className="loadingLogout">
+          <div className="loadingcard">
+            <p>Sedang logout...</p>
+          </div>
+        </div>
+      )}
       <SideBar
         selectedSensor={selectedSensors}
         selectedFarm={selectedFarm}
