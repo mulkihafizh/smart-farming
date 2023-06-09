@@ -120,21 +120,21 @@ export default function CreateFarm() {
                   </div>
                   <div className="inputGroups">
                     <div className="inputGroup">
-                      <label htmlFor="farmName">Latitude</label>
-                      <input
-                        type="text"
-                        onChange={(e) => {
-                          setLat(e.target.value);
-                        }}
-                        id="farmLong"
-                      />
-                    </div>
-                    <div className="inputGroup">
                       <label htmlFor="farmName">Longitude</label>
                       <input
                         type="text"
                         onChange={(e) => {
                           setLong(e.target.value);
+                        }}
+                        id="farmLong"
+                      />
+                    </div>
+                    <div className="inputGroup">
+                      <label htmlFor="farmName">Latitude</label>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setLat(e.target.value);
                         }}
                         id="farmLat"
                       />
@@ -150,13 +150,13 @@ export default function CreateFarm() {
             </div>
           </div>
 
-          {!latitude ||
-            (!longitude && (
+          {(!latitude && !longitude) ||
+            ((!latitude || !longitude) && (
               <div className="loadingMap">Masukkan Longitude dan Latitude!</div>
             ))}
           {latitude && longitude && (
             <MapContainer
-              center={[latitude, longitude]}
+              center={[longitude, latitude]}
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
               className="formMap"
@@ -165,7 +165,7 @@ export default function CreateFarm() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution=""
               />
-              <Marker position={[latitude, longitude]}></Marker>
+              <Marker position={[longitude, latitude]}></Marker>
             </MapContainer>
           )}
         </div>
