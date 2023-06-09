@@ -232,8 +232,8 @@ export default function Dashboard() {
           {farmData.length > 0 && farmData !== [] && loaded === true && (
             <MapContainer
               center={[
-                parseFloat(farmData[0].longitude.$numberDecimal),
                 parseFloat(farmData[0].latitude.$numberDecimal),
+                parseFloat(farmData[0].longitude.$numberDecimal),
               ]}
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
@@ -250,8 +250,8 @@ export default function Dashboard() {
                     <Marker
                       key={index}
                       position={[
-                        parseFloat(farm.longitude.$numberDecimal),
                         parseFloat(farm.latitude.$numberDecimal),
+                        parseFloat(farm.longitude.$numberDecimal),
                       ]}
                       eventHandlers={{
                         click: () => handleFarmClick(farm),
