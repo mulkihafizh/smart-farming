@@ -51,26 +51,29 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/dashboard",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .get(process.env.REACT_APP_API_URL + "/smart-farming/dashboard", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
-        console.log(res);
-        setFarmData(res.data.farm);
-        setUser(res.data.user);
-        setSensor(res.data.sensor);
-        setHistories(res.data.history);
-        setCookie("userId", res.data.user._id, {
-          path: "/",
-          sameSite: "none",
-          secure: true,
-        });
-        setLoaded(true);
+        if (res.status > 200 || res.status < 299) {
+          setFarmData(res.data.farm);
+          setUser(res.data.user);
+          setSensor(res.data.sensor);
+          setHistories(res.data.history);
+          setCookie("userId", res.data.user._id, {
+            path: "/",
+            sameSite: "none",
+            secure: true,
+          });
+          setLoaded(true);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          navigate("/unable-to-access");
+        }
       });
 
     const mapContainer = document.getElementById("mapContainer");

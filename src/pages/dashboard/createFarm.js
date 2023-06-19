@@ -50,16 +50,12 @@ export default function CreateFarm() {
       latitude: latitude,
     };
     axios
-      .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/farm/create",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
+      .post(process.env.REACT_APP_API_URL + "/farm/create", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");

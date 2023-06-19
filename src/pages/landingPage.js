@@ -40,7 +40,7 @@ export default function LandingPage() {
         <h1 className="card-heading">For your Information</h1>
         <div className="card-content">
           <div className="card">
-            <span class="tag">Feature</span>
+            <span className="tag">Feature</span>
             <h2 className="card-title">Title</h2>
             <div className="card-info">
               <p className="info">
@@ -50,7 +50,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="card">
-            <span class="tag">Feature</span>
+            <span className="tag">Feature</span>
             <h2 className="card-title">Title</h2>
             <div className="card-info">
               <p className="info">
@@ -60,7 +60,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="card">
-            <span class="tag">Feature</span>
+            <span className="tag">Feature</span>
             <h2 className="card-title">Title</h2>
             <div className="card-info">
               <p className="info">
@@ -122,13 +122,13 @@ export default function LandingPage() {
               <h4>Our Socialmedia</h4>
               <div className="socialmedia">
                 <p>
-                  <i class="fab fa-facebook-f"></i>
+                  <i className="fab fa-facebook-f"></i>
                 </p>
                 <p>
-                  <i class="fa-brands fa-instagram"></i>
+                  <i className="fa-brands fa-instagram"></i>
                 </p>
                 <p>
-                  <i class="fa-brands fa-youtube"></i>
+                  <i className="fa-brands fa-youtube"></i>
                 </p>
               </div>
             </div>

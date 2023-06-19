@@ -14,7 +14,6 @@ export default function RegisterPage() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (cookies.token) {
@@ -24,22 +23,18 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isLoading) {
-      return;
-    }
 
     if (username === "" || email === "" || password === "") {
       setIsError(true);
       setToastMessage("Please fill all the fields");
       setShowToast(true);
-      setIsLoading(true);
 
       return;
     }
 
     axios
       .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signup",
+        process.env.REACT_APP_API_URL + "/smart-farming/signup",
         {
           username: username,
           email: email,
@@ -60,10 +55,10 @@ export default function RegisterPage() {
         setIsError(true);
         setToastMessage(err.response.data.error);
         setShowToast(true);
-        setIsLoading(true);
       });
   };
 
+  console.log(process.env.REACT_APP_API_URL);
   return (
     <div id="register">
       {showToast && (
@@ -104,7 +99,7 @@ export default function RegisterPage() {
             </div>
           </form>
           <div className="button">
-            <button className="textButton" onClick={handleSubmit}>
+            <button className="textButton submitBtn" onClick={handleSubmit}>
               Login
             </button>
           </div>

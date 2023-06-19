@@ -647,3 +647,13 @@
 .formMap .leaflet-popup-close-button {
   display: none;
 }
+
+.sideBarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sideBarNav a {
+  color: white;
+  font-size: 18px;
+}

@@ -36,6 +36,7 @@ export default function Sidebar({
         </div>
         <div className="sidebarMenu">
           <div className="addFarmItem">
+            <Link to={`/dashboard/admin`}>Admin Dashboard</Link>
             <Link to={`/tambah-lahan`}>
               <i className="fa-solid fa-plus"></i> <p>Tambah Lahan</p>
             </Link>
