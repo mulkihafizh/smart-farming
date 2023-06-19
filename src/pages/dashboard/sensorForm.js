@@ -44,7 +44,7 @@ export default function SensorFarm() {
     }
 
     axios
-      .get(`https://smartfarming-api-mulkihafizh.vercel.app/farm/${farmId}`, {
+      .get(process.env.REACT_APP_API_URL + `/farm/${farmId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -57,6 +57,9 @@ export default function SensorFarm() {
         }
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          navigate("/dashboard");
+        }
         setIsError(true);
         setToastMessage(err.response.data.error);
         setShowToast(true);
@@ -81,16 +84,12 @@ export default function SensorFarm() {
     };
 
     axios
-      .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/sensor/create",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
+      .post(process.env.REACT_APP_API_URL + "/sensor/create", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");

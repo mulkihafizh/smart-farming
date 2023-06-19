@@ -38,7 +38,7 @@ export default function LoginPage() {
 
     axios
       .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signin",
+        process.env.REACT_APP_API_URL + "/smart-farming/signin",
         {
           email: email,
           password: password,
@@ -96,7 +96,7 @@ export default function LoginPage() {
           <div className="button">
             <button
               onClick={handleSubmit}
-              className="Buttontext"
+              className="Buttontext submitBtn"
               disabled={isLoading}
             >
               Login
