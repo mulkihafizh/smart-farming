@@ -5,6 +5,7 @@ import LoginPage from "./pages/loginPage";
 import CreateFarm from "./pages/dashboard/createFarm";
 import LoginFirst from "./pages/errors/loginFirst";
 import CreateSensor from "./pages/dashboard/sensorForm";
+import AdminPage from "./pages/dashboard/adminDashboard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
     element: (
       <>
         <CreateFarm />
+      </>
+    ),
+  },
+  {
+    path: "/admin-dashboard",
+    element: (
+      <>
+        <AdminPage />
       </>
     ),
   },
