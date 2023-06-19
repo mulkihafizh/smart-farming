@@ -51,7 +51,7 @@ body {
 }
 
 .content {
-    position: fixed;
+    position: relative;
     width: calc(100% - 260px);
     left: 260px;
     box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
@@ -150,7 +150,7 @@ nav .userProfile .profile-link a:hover {
 .header {
     position: relative;
     width: 100%;
-    padding: 70px;  
+    padding: 70px;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
@@ -201,12 +201,12 @@ nav .userProfile .profile-link a:hover {
 @media (max-width: 768px) {
     
     #sideBar {
-      display: none;
+      display: none; 
     }
     
     .content {
       width: 100%; 
-      left: 0;
+      left: 0; 
     }
     
     .header {
