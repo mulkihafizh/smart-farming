@@ -48,7 +48,6 @@ export default function LoginPage() {
         }
       )
       .then((res) => {
-        console.log(res);
         if (res.status) {
           setCookie("token", res.data.token, {
             path: "/",
