@@ -33,10 +33,7 @@ const router = createBrowserRouter(
             {
               withCredentials: true,
               headers: {
-                Cookie: "token=" + document.cookie.token,
                 "Content-Type": "application/json",
-                Accept: "/",
-                "Cache-Control": "no-cache",
               },
             }
           );
