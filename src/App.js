@@ -30,7 +30,6 @@ const router = createBrowserRouter(
           const data = await axios.get(
             process.env.REACT_APP_API_URL + "/user/dashboard",
             {
-              withCredentials: true,
               headers: {
                 "Content-Type": "application/json",
               },
