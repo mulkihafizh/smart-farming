@@ -141,7 +141,7 @@ export default function Dashboard() {
                 </p>
                 <img
                   className="userProfilePic"
-                  src={`https://ui-avatars.com/api/?name=${data.user.username}&background=random&color=fff&size=128&rounded=true&bold=true&font-size=0.33&length=1&uppercase=true&format=svg`}
+                  src={`https://ui-avatars.com/api/?name=${data.user.username}&background=01535e&color=fff&size=128&rounded=true&bold=true&font-size=0.33&length=1&uppercase=true&format=svg`}
                   alt="Profile "
                 />
               </>
