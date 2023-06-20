@@ -27,12 +27,13 @@ const router = createBrowserRouter(
       <Route
         path="/dashboard"
         loader={async () => {
+          axios.defaults.withCredentials = true;
           const data = await axios.get(
             process.env.REACT_APP_API_URL + "/user/dashboard",
             {
               withCredentials: true,
               headers: {
-                Cookie: "token=" + document.cookie.token,
+                "Cookie": "token=" + document.cookie.token,
                 "Content-Type": "application/json",
               },
             }
