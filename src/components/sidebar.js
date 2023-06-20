@@ -5,9 +5,11 @@ export default function Sidebar({
   selectedFarm,
   selectedSensor,
   handleSensorItemClick,
+  user,
 }) {
   const [handleSidebar, setSidebar] = useState(true);
   const [clickedSensor, setClickedSensor] = useState(null);
+  console.log(user);
 
   const handleSidebarClicked = () => {
     setSidebar((prevState) => !prevState);
@@ -36,25 +38,30 @@ export default function Sidebar({
         </div>
         <div className="sidebarMenu">
           <div className="addFarmItem">
+            {user.role === "admin" && (
+              <Link to={`/admin-dashboard`}>
+                <i className="fa-solid fa-user"></i> <p>Admin Dashboard</p>
+              </Link>
+            )}
 
-          
-          <Link to={`/admin-dashboard`}>
-              <i className="fa-solid fa-user"></i> <p>Admin Dashboard</p>
-           </Link>
- 
             <Link to={`/tambah-lahan`}>
               <i className="fa-solid fa-plus"></i> <p>Tambah Lahan</p>
             </Link>
-            
           </div>
           {selectedFarm ? (
             <div className="farm">
               <p className="farmName">{selectedFarm.name}</p>
               <div className="sideItems">
-                <a href="/dashboard" className="itemTitle">
+                <Link
+                  to={`/tambah-aktuator/${selectedFarm._id}`}
+                  className="itemTitle"
+                >
+                  <i className="fa-solid fa-plus"></i> <p>Tambah Aktuator</p>
+                </Link>
+                <p className="itemTitle">
                   <i className="fa-solid fa-screwdriver-wrench"></i>{" "}
                   <p>Aktuator</p>
-                </a>
+                </p>
               </div>
               <div className="sideItems">
                 <Link

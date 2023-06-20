@@ -657,3 +657,11 @@
   color: white;
   font-size: 18px;
 }
+
+.addFarmItem {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
+

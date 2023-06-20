@@ -6,7 +6,7 @@ import L from "leaflet";
 import { useParams } from "react-router-dom";
 import Toast from "../../components/toast";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLoaderData } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -17,53 +17,27 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function SensorFarm() {
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const data = useLoaderData();
+  const farm = data.farm.farm;
   const { farmId } = useParams();
   const [name, setName] = useState("");
   const [guid, setGuid] = useState("");
-  const options = ["Water Flow", "Water Meter", "Water pH", "Soil Moisture"];
+  const options = data.types.types;
   const [selectedOption, setSelectedOption] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
   let navigate = useNavigate();
   const [cookies] = useCookies(["userId"]);
-  const [farm, setFarm] = useState({});
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
-  };
-
-  const handleMapReady = () => {
-    setMapLoaded(true);
   };
 
   useEffect(() => {
     if (!cookies.token) {
       navigate("/dashboard");
     }
-
-    axios
-      .get(process.env.REACT_APP_API_URL + `/farm/${farmId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setFarm(res.data.farm);
-          setMapLoaded(true);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          navigate("/dashboard");
-        }
-        setIsError(true);
-        setToastMessage(err.response.data.error);
-        setShowToast(true);
-      });
   }, [cookies.token, navigate, farmId]);
 
   const handleSubmit = (e) => {
@@ -152,9 +126,9 @@ export default function SensorFarm() {
                       >
                         Choose Sensor
                       </option>
-                      {options.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
+                      {options.map((option) => (
+                        <option key={option._id} value={option.name}>
+                          {option.name}
                         </option>
                       ))}
                     </select>
@@ -167,16 +141,14 @@ export default function SensorFarm() {
             </div>
           </div>
 
-          {!mapLoaded && <div>Loading map...</div>}
-          {mapLoaded && farm && farm.latitude && farm.longitude && (
+          {farm && farm.latitude && farm.longitude && (
             <MapContainer
               center={[
-                farm.longitude.$numberDecimal,
                 farm.latitude.$numberDecimal,
+                farm.longitude.$numberDecimal,
               ]}
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
-              whenReady={handleMapReady}
               className="formMap"
             >
               <TileLayer
@@ -185,8 +157,8 @@ export default function SensorFarm() {
               />
               <Marker
                 position={[
-                  farm.longitude.$numberDecimal,
                   farm.latitude.$numberDecimal,
+                  farm.longitude.$numberDecimal,
                 ]}
               >
                 <Popup>

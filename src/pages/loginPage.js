@@ -38,7 +38,7 @@ export default function LoginPage() {
 
     axios
       .post(
-        process.env.REACT_APP_API_URL + "/smart-farming/signin",
+        process.env.REACT_APP_API_URL + "/user/signin",
         {
           email: email,
           password: password,

@@ -4,7 +4,7 @@ import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLoaderData } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -16,25 +16,16 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function Dashboard() {
-  const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState(null);
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
-  const [farmData, setFarmData] = useState([]);
+  const data = useLoaderData();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [user, setUser] = useState([]);
-  const [sensor, setSensor] = useState([]);
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
-  const [details, setDetails] = useState(false);
-  const [histories, setHistories] = useState([]);
   const [loggingOut, setLogout] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
-
-  const handleMapReady = () => {
-    setMapLoaded(true);
-  };
+  const [details, setDetails] = useState({});
 
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);
@@ -43,39 +34,13 @@ export default function Dashboard() {
   const handleFarmClick = (farm) => {
     const farmId = farm._id;
     setSelectedFarm((prevFarm) => (prevFarm === farm ? null : farm));
-    const filteredSensor = sensor.filter(
+    const filteredSensor = data.sensor.filter(
       (sensor) => sensor._farm_id === farmId
     );
     setSelectedSensor(filteredSensor);
   };
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/smart-farming/dashboard", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        if (res.status > 200 || res.status < 299) {
-          setFarmData(res.data.farm);
-          setUser(res.data.user);
-          setSensor(res.data.sensor);
-          setHistories(res.data.history);
-          setCookie("userId", res.data.user._id, {
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
-          setLoaded(true);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          navigate("/unable-to-access");
-        }
-      });
-
     const mapContainer = document.getElementById("mapContainer");
     if (!cookies.token) {
       navigate("/login");
@@ -108,9 +73,11 @@ export default function Dashboard() {
 
   const handleSensorItemClick = (sensorId) => {
     setClickedSensor((prevSensor) => (prevSensor === sensorId ? "" : sensorId));
-    const selectedDetail = sensor.filter((farm) => farm._id === sensorId)[0];
+    const selectedDetail = data.sensor.filter(
+      (farm) => farm._id === sensorId
+    )[0];
     setDetails(selectedDetail);
-    const history = histories.filter(
+    const history = data.history.filter(
       (history) => history._sensor_id === sensorId
     );
     setSelectedHistory(history);
@@ -122,7 +89,7 @@ export default function Dashboard() {
     setLogout(true);
     axios
       .post(
-        "https://smartfarming-api-mulkihafizh.vercel.app/smart-farming/signout",
+        process.env.REACT_APP_API_URL + "/user/signout",
         {
           headers: {
             "Content-Type": "application/json",
@@ -156,6 +123,7 @@ export default function Dashboard() {
         selectedSensor={selectedSensors}
         selectedFarm={selectedFarm}
         handleSensorItemClick={handleSensorItemClick}
+        user={data.user}
       />
       <div className="rightSide">
         <header id="dashboardHead">
@@ -164,16 +132,16 @@ export default function Dashboard() {
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
           <div className="userProfile" onClick={handleProfileClick}>
-            {user.username !== undefined ? (
+            {data.user.username !== undefined ? (
               <>
                 <p className="userName">
-                  {user.username.charAt(0).toUpperCase() +
-                    user.username.slice(1)}
+                  {data.user.username.charAt(0).toUpperCase() +
+                    data.user.username.slice(1)}
                 </p>
                 <img
                   className="userProfilePic"
-                  src="https://img.wattpad.com/5edad7765319cd862679ee6a481c19eadb22a39f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f3979324d3941414a6b64685359673d3d2d3838363634363239372e313630666132353063336133306534623333383235373633393935362e6a7067?s=fit&w=720&h=720"
-                  alt=""
+                  src={`https://ui-avatars.com/api/?name=${data.user.username}&background=random&color=fff&size=128&rounded=true&bold=true&font-size=0.33&length=1&uppercase=true&format=svg`}
+                  alt="Profile "
                 />
               </>
             ) : (
@@ -197,10 +165,7 @@ export default function Dashboard() {
               <div className="sensorData">
                 <p className="historyMain">History :</p>
                 <div className="historyItems">
-                  {histories.length === 0 ||
-                    (selectedHistory.length === 0 && <p>No History</p>)}
-                  {histories.length > 0 &&
-                    selectedHistory.length > 0 &&
+                  {data.history.length > 0 || selectedHistory.length > 0 ? (
                     selectedHistory.map((history) => (
                       <div className="historyItem" key={history._id}>
                         <p className="historyTitle">{history.title}</p>
@@ -216,15 +181,20 @@ export default function Dashboard() {
                         </p>
                         <p className="historyDesc">{history.description}</p>
                       </div>
-                    ))}
+                    ))
+                  ) : (
+                    <div className="noHistory">
+                      <p className="noHistoryText">
+                        Tidak ada history ditemukan!
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           )}
-          {!loaded && !mapLoaded && (
-            <div className="loadingMap">Loading map...</div>
-          )}
-          {farmData.length === 0 && loaded && (
+
+          {data.farm.length === 0 && (
             <div className="noFarms">
               <p className="noFarmsText">Tidak ada lahan ditemukan!</p>
               <Link to="/tambah-lahan">
@@ -232,23 +202,21 @@ export default function Dashboard() {
               </Link>
             </div>
           )}
-          {farmData.length > 0 && farmData !== [] && loaded === true && (
+          {data.farm.length > 0 && data.farm !== [] && (
             <MapContainer
               center={[
-                parseFloat(farmData[0].latitude.$numberDecimal),
-                parseFloat(farmData[0].longitude.$numberDecimal),
+                parseFloat(data.farm[0].latitude.$numberDecimal),
+                parseFloat(data.farm[0].longitude.$numberDecimal),
               ]}
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
-              whenReady={handleMapReady}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution=""
               />
-              {loaded &&
-                farmData.length > 0 &&
-                farmData.map((farm, index) => {
+              {data.farm.length > 0 &&
+                data.farm.map((farm, index) => {
                   return (
                     <Marker
                       key={index}
