@@ -54,7 +54,7 @@ export default function LoginPage() {
             path: "/",
             maxAge: 36000,
             sameSite: "none",
-            secure: true,
+            secure: false,
           });
           navigate("/dashboard");
         }
