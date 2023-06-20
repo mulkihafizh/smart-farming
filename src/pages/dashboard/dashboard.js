@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
   const data = useLoaderData();
+  console.log(data);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
