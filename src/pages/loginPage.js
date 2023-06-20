@@ -52,7 +52,7 @@ export default function LoginPage() {
           setCookie("token", res.data.token, {
             path: "/",
             maxAge: 36000,
-            sameSite: "none",
+            sameSite: "None",
             secure: true,
           });
           navigate("/dashboard");
