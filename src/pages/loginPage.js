@@ -48,7 +48,7 @@ export default function LoginPage() {
         }
       )
       .then((res) => {
-        if (res.status) {
+        if (res.status == 200) {
           setCookie("token", res.data.token, {
             path: "/",
             maxAge: 36000,
