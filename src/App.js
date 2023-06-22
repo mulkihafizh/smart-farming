@@ -26,8 +26,8 @@ const router = createBrowserRouter(
         path="/register"
         loader={async () => {
           axios.defaults.withCredentials = true;
-          const data = await axios
-            .get(process.env.REACT_APP_API_URL + "/user/authFalse", {
+          await axios
+            .get(process.env.REACT_APP_API_URL + "/user/authfalse", {
               withCredentials: true,
               headers: {
                 "Content-Type": "application/json",
@@ -35,13 +35,10 @@ const router = createBrowserRouter(
             })
             .catch((err) => {
               if (err.response.status === 401) {
-                return (window.location.href = "/unable-to-access");
+                return (window.location.href = "/dashboard");
               }
             });
 
-          if (data.status === 200) {
-            return;
-          }
           return;
         }}
         element={<RegisterPage />}
@@ -50,8 +47,8 @@ const router = createBrowserRouter(
         path="/login"
         loader={async () => {
           axios.defaults.withCredentials = true;
-          const data = await axios
-            .get(process.env.REACT_APP_API_URL + "/user/authFalse", {
+          await axios
+            .get(process.env.REACT_APP_API_URL + "/user/authfalse", {
               withCredentials: true,
               headers: {
                 "Content-Type": "application/json",
@@ -63,9 +60,6 @@ const router = createBrowserRouter(
               }
             });
 
-          if (data.status === 200) {
-            return;
-          }
           return;
         }}
         element={<LoginPage />}
