@@ -28,7 +28,7 @@ const router = createBrowserRouter(
           axios.defaults.withCredentials = true;
 
           if (document.cookie.token) {
-            window.location.href("/dashboard");
+            return (window.location.href = "/dashboard");
           }
 
           await axios
@@ -52,7 +52,7 @@ const router = createBrowserRouter(
         path="/login"
         loader={async () => {
           if (document.cookie.token) {
-            window.location.href("/dashboard");
+            return (window.location.href = "/dashboard");
           }
           axios.defaults.withCredentials = true;
           await axios
@@ -76,7 +76,7 @@ const router = createBrowserRouter(
         path="/dashboard"
         loader={async () => {
           if (!document.cookie.token) {
-            window.location.href("/login");
+            return (window.location.href = "/login");
           }
           axios.defaults.withCredentials = true;
           const data = await axios
@@ -104,7 +104,7 @@ const router = createBrowserRouter(
         path="/tambah-lahan"
         loader={async () => {
           if (!document.cookie.token) {
-            window.location.href("/login");
+            return (window.location.href = "/login");
           }
           const data = await axios
             .get(process.env.REACT_APP_API_URL + "/user/check", {
@@ -130,7 +130,7 @@ const router = createBrowserRouter(
         path="/tambah-sensor/:farmId"
         loader={async () => {
           if (!document.cookie.token) {
-            window.location.href("/login");
+            return (window.location.href = "/login");
           }
           const farmId = window.location.pathname.split("/");
           const data = await axios
@@ -176,7 +176,7 @@ const router = createBrowserRouter(
         <Route
           loader={async () => {
             if (!document.cookie.token) {
-              window.location.href("/login");
+              return (window.location.href = "/login");
             }
             const data = await axios
               .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
@@ -194,7 +194,7 @@ const router = createBrowserRouter(
             if (data.status === 200) {
               return data.data;
             }
-            return window.location.href("/unable-to-access");
+            return (window.location.href = "/unable-to-access");
           }}
           index
           element={<ListUser />}
@@ -218,7 +218,7 @@ const router = createBrowserRouter(
             if (data.status === 200) {
               return data.data;
             }
-            return window.location.href("/unable-to-access");
+            return (window.location.href = "/unable-to-access");
           }}
           element={<ListType />}
         />
