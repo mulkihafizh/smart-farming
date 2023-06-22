@@ -26,6 +26,11 @@ const router = createBrowserRouter(
         path="/register"
         loader={async () => {
           axios.defaults.withCredentials = true;
+
+          if (document.cookie.token) {
+            navigate("/dashboard");
+          }
+
           await axios
             .get(process.env.REACT_APP_API_URL + "/user/authfalse", {
               withCredentials: true,
@@ -46,6 +51,9 @@ const router = createBrowserRouter(
       <Route
         path="/login"
         loader={async () => {
+          if (document.cookie.token) {
+            navigate("/dashboard");
+          }
           axios.defaults.withCredentials = true;
           await axios
             .get(process.env.REACT_APP_API_URL + "/user/authfalse", {
@@ -67,6 +75,9 @@ const router = createBrowserRouter(
       <Route
         path="/dashboard"
         loader={async () => {
+          if (!document.cookie.token) {
+            navigate("/login");
+          }
           axios.defaults.withCredentials = true;
           const data = await axios
             .get(process.env.REACT_APP_API_URL + "/user/dashboard", {
@@ -92,6 +103,9 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-lahan"
         loader={async () => {
+          if (!document.cookie.token) {
+            navigate("/login");
+          }
           const data = await axios
             .get(process.env.REACT_APP_API_URL + "/user/check", {
               withCredentials: true,
@@ -115,6 +129,9 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-sensor/:farmId"
         loader={async () => {
+          if (!document.cookie.token) {
+            navigate("/login");
+          }
           const farmId = window.location.pathname.split("/");
           const data = await axios
             .get(process.env.REACT_APP_API_URL + "/farm/" + farmId[2], {
@@ -158,6 +175,9 @@ const router = createBrowserRouter(
       <Route path="/admin-dashboard" element={<AdminPage />}>
         <Route
           loader={async () => {
+            if (!document.cookie.token) {
+              navigate("/login");
+            }
             const data = await axios
               .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
                 withCredentials: true,
