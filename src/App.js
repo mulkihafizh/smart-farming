@@ -16,6 +16,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 
 const router = createBrowserRouter(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
         path="/register"
         loader={async () => {
           axios.defaults.withCredentials = true;
+          let navigate = useNavigate();
 
           if (document.cookie.token) {
             navigate("/dashboard");
@@ -51,6 +53,8 @@ const router = createBrowserRouter(
       <Route
         path="/login"
         loader={async () => {
+          let navigate = useNavigate();
+
           if (document.cookie.token) {
             navigate("/dashboard");
           }
@@ -75,6 +79,8 @@ const router = createBrowserRouter(
       <Route
         path="/dashboard"
         loader={async () => {
+          let navigate = useNavigate();
+
           if (!document.cookie.token) {
             navigate("/login");
           }
@@ -103,6 +109,7 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-lahan"
         loader={async () => {
+          const navigate = useNavigate();
           if (!document.cookie.token) {
             navigate("/login");
           }
@@ -129,6 +136,7 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-sensor/:farmId"
         loader={async () => {
+          const navigate = useNavigate();
           if (!document.cookie.token) {
             navigate("/login");
           }
@@ -175,6 +183,7 @@ const router = createBrowserRouter(
       <Route path="/admin-dashboard" element={<AdminPage />}>
         <Route
           loader={async () => {
+            const navigate = useNavigate();
             if (!document.cookie.token) {
               navigate("/login");
             }

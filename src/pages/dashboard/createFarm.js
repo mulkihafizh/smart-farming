@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import Toast from "../../components/toast";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -22,7 +21,6 @@ export default function CreateFarm() {
   const [area, setArea] = useState("");
   const [longitude, setLong] = useState("");
   const [latitude, setLat] = useState("");
-  const [cookies] = useCookies(["token"]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
