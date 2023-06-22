@@ -28,27 +28,50 @@ const router = createBrowserRouter(
         path="/dashboard"
         loader={async () => {
           axios.defaults.withCredentials = true;
-          const data = await axios.get(
-            process.env.REACT_APP_API_URL + "/user/dashboard",
-            {
+          const data = await axios
+            .get(process.env.REACT_APP_API_URL + "/user/dashboard", {
               withCredentials: true,
               headers: {
                 "Content-Type": "application/json",
               },
-            }
-          );
+            })
+            .catch((err) => {
+              if (err.response.status === 401) {
+                return (window.location.href = "/unable-to-access");
+              }
+            });
 
           if (data.status === 200) {
             return data.data;
-          } else if (data.status === 401) {
-            return (window.location.href = "/unable-to-access");
           }
           return null;
         }}
         element={<DashboardPage />}
       />
       ,
-      <Route path="/tambah-lahan" element={<CreateFarm />} />
+      <Route
+        path="/tambah-lahan"
+        loader={async () => {
+          const data = await axios
+            .get(process.env.REACT_APP_API_URL + "/user/check", {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .catch((err) => {
+              if (err.response.status === 401) {
+                return (window.location.href = "/unable-to-access");
+              }
+            });
+
+          if (data.status === 200) {
+            return data.data;
+          }
+          return (window.location.href = "/unable-to-access");
+        }}
+        element={<CreateFarm />}
+      />
       <Route
         path="/tambah-sensor/:farmId"
         loader={async () => {
@@ -86,7 +109,7 @@ const router = createBrowserRouter(
           if (data.status === 200 && types.status === 200) {
             return datas;
           }
-          return null;
+          return (window.location.href = "/unable-to-access");
         }}
         element={<CreateSensor />}
       />
@@ -111,7 +134,7 @@ const router = createBrowserRouter(
             if (data.status === 200) {
               return data.data;
             }
-            return null;
+            return window.location.href("/unable-to-access");
           }}
           index
           element={<ListUser />}
@@ -135,7 +158,7 @@ const router = createBrowserRouter(
             if (data.status === 200) {
               return data.data;
             }
-            return null;
+            return window.location.href("/unable-to-access");
           }}
           element={<ListType />}
         />

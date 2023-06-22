@@ -46,6 +46,7 @@ export default function Dashboard() {
   useEffect(() => {
     const mapContainer = document.getElementById("mapContainer");
 
+
     if (cookies.toastMessage) {
       setToastMessage({ message: cookies.toastMessage, isError: false });
       setShowToast(true);

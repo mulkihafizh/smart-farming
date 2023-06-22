@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
@@ -26,12 +26,6 @@ export default function CreateFarm() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    if (!cookies.token) {
-      navigate("/dashboard");
-    }
-  }, [cookies.token, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
