@@ -56,7 +56,7 @@ const router = createBrowserRouter(
             })
             .catch((err) => {
               if (err.response.status === 401) {
-                return (window.location.href = "/unable-to-access");
+                return (window.location.href = "/dashboard");
               }
             });
 
