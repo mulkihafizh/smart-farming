@@ -1,15 +1,15 @@
 import React from "react";
 import "../assets/css/toast.css";
 
-const Toast = ({ message, isError }) => {
+const Toast = (toast) => {
   return (
-    <div className={`toast ${isError ? "isError" : "isSuccess"}`}>
-      {isError ? (
+    <div className={`toast ${toast.toast.isError ? "isError" : "isSuccess"}`}>
+      {toast.toast.isError ? (
         <i className="fa-solid toastIcon fa-circle-xmark"></i>
       ) : (
         <i className="fa-solid toastIcon fa-circle-check"></i>
       )}
-      <span className="toast-message">{message}</span>
+      <span className="toast-message">{toast.toast.message}</span>
     </div>
   );
 };

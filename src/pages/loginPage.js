@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [cookies, setCookie] = useCookies(["token"]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,11 +27,9 @@ export default function LoginPage() {
     }
 
     if (email === "" || password === "") {
-      setIsError(true);
-      setToastMessage("Please fill all the fields");
+      setToastMessage({ message: "Please fill all the fields", isError: true });
       setShowToast(true);
       setIsLoading(true);
-
       return;
     }
 
@@ -48,14 +45,17 @@ export default function LoginPage() {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
-          navigate("/dashboard");
-        }
+        setCookie("toastMessage", "Login Berhasil", {
+          path: "/",
+          maxAge: 3600,
+        });
+        navigate("/dashboard");
       })
       .catch((err) => {
-        console.log(err);
-        setIsError(true);
-        setToastMessage(err.response.data.error);
+        setToastMessage({
+          message: err.response.data.error,
+          isError: true,
+        });
         setShowToast(true);
       });
     setIsLoading(false);
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
   return (
     <div id="Login">
-      {showToast && <Toast message={toastMessage} isError={isError} />}
+      {showToast && <Toast toast={toastMessage} />}
       <header className="LoginHeader">
         <div className="LoginSection">
           <p className="loginappTitle">Login Credential</p>

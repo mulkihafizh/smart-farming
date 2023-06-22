@@ -13,7 +13,6 @@ export default function RegisterPage() {
   const [cookies] = useCookies(["token"]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (cookies.token) {
@@ -25,8 +24,8 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (username === "" || email === "" || password === "") {
-      setIsError(true);
-      setToastMessage("Please fill all the fields");
+      setToastMessage({ message: "Please fill all the fields", isError: true });
+
       setShowToast(true);
 
       return;
@@ -45,29 +44,19 @@ export default function RegisterPage() {
         }
       )
       .then((res) => {
-        console.log(res);
         if (res.status) {
           navigate("/login");
         }
       })
       .catch((err) => {
-        console.log(err);
-        setIsError(true);
-        setToastMessage(err.response.data.error);
+        setToastMessage({ message: err.response.data.error, isError: true });
         setShowToast(true);
       });
   };
 
-  console.log(process.env.REACT_APP_API_URL);
   return (
     <div id="register">
-      {showToast && (
-        <Toast
-          isError={isError}
-          message={toastMessage}
-          setShowToast={setShowToast}
-        />
-      )}
+      {showToast && <Toast toast={toastMessage} />}
       <header className="registerHeader">
         <div className="registerSection">
           <p className="registertitleApp">Register</p>

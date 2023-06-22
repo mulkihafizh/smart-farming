@@ -7,6 +7,7 @@ import L from "leaflet";
 import { useNavigate, Link, useLoaderData } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import Toast from "../../components/toast";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -20,13 +21,14 @@ export default function Dashboard() {
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
   const data = useLoaderData();
-  console.log(data);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
   const [loggingOut, setLogout] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
   const [details, setDetails] = useState({});
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);
@@ -46,18 +48,24 @@ export default function Dashboard() {
     if (!cookies.token) {
       navigate("/login");
     }
+    if (cookies.toastMessage) {
+      setToastMessage(cookies.toastMessage);
+      setShowToast(true);
+      setInterval(() => {
+        setToastMessage("");
+        setShowToast(false);
+        setCookie("toastMessage", "", { path: "/", maxAge: 0 });
+      }, 3000);
+    }
 
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
           const sensorDetails = mapContainer.querySelector(".sensorDetails");
           if (!sensorDetails) {
-            console.log("Sensor details not found");
             try {
               setClickedSensor(null);
-            } catch (err) {
-              console.log(err);
-            }
+            } catch (err) {}
           }
         }
       }
@@ -70,7 +78,7 @@ export default function Dashboard() {
     return () => {
       observer.disconnect();
     };
-  }, [cookies.token, navigate, setCookie]);
+  }, [cookies.token, navigate, setCookie, cookies.toastMessage]);
 
   const handleSensorItemClick = (sensorId) => {
     setClickedSensor((prevSensor) => (prevSensor === sensorId ? "" : sensorId));
@@ -102,7 +110,6 @@ export default function Dashboard() {
         }
       )
       .then((response) => {
-        console.log(response);
         if (response.data.success) {
           setCookie("userId", "", { path: "/", maxAge: 0 });
           setCookie("token", "", { path: "/", maxAge: 0 });
@@ -120,6 +127,7 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+      {showToast && <Toast toast={toastMessage} />}
       <SideBar
         selectedSensor={selectedSensors}
         selectedFarm={selectedFarm}
