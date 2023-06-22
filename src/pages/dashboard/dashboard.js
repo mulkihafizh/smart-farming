@@ -45,11 +45,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     const mapContainer = document.getElementById("mapContainer");
-    if (!cookies.token) {
-      navigate("/login");
-    }
+
     if (cookies.toastMessage) {
-      setToastMessage(cookies.toastMessage);
+      setToastMessage({ message: cookies.toastMessage, isError: false });
       setShowToast(true);
       setInterval(() => {
         setToastMessage("");

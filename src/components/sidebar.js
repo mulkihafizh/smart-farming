@@ -9,7 +9,6 @@ export default function Sidebar({
 }) {
   const [handleSidebar, setSidebar] = useState(true);
   const [clickedSensor, setClickedSensor] = useState(null);
-  console.log(user);
 
   const handleSidebarClicked = () => {
     setSidebar((prevState) => !prevState);
