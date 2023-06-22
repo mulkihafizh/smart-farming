@@ -47,7 +47,6 @@ export default function LoginPage() {
       .then((res) => {
         setCookie("toastMessage", "Login Berhasil", {
           path: "/",
-          maxAge: 3600,
         });
         navigate("/dashboard");
       })
