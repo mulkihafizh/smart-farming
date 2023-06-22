@@ -16,7 +16,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 
 const router = createBrowserRouter(
@@ -27,10 +26,9 @@ const router = createBrowserRouter(
         path="/register"
         loader={async () => {
           axios.defaults.withCredentials = true;
-          let navigate = useNavigate();
 
           if (document.cookie.token) {
-            navigate("/dashboard");
+            window.location.href("/dashboard");
           }
 
           await axios
@@ -53,10 +51,8 @@ const router = createBrowserRouter(
       <Route
         path="/login"
         loader={async () => {
-          let navigate = useNavigate();
-
           if (document.cookie.token) {
-            navigate("/dashboard");
+            window.location.href("/dashboard");
           }
           axios.defaults.withCredentials = true;
           await axios
@@ -79,10 +75,8 @@ const router = createBrowserRouter(
       <Route
         path="/dashboard"
         loader={async () => {
-          let navigate = useNavigate();
-
           if (!document.cookie.token) {
-            navigate("/login");
+            window.location.href("/login");
           }
           axios.defaults.withCredentials = true;
           const data = await axios
@@ -109,9 +103,8 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-lahan"
         loader={async () => {
-          const navigate = useNavigate();
           if (!document.cookie.token) {
-            navigate("/login");
+            window.location.href("/login");
           }
           const data = await axios
             .get(process.env.REACT_APP_API_URL + "/user/check", {
@@ -136,9 +129,8 @@ const router = createBrowserRouter(
       <Route
         path="/tambah-sensor/:farmId"
         loader={async () => {
-          const navigate = useNavigate();
           if (!document.cookie.token) {
-            navigate("/login");
+            window.location.href("/login");
           }
           const farmId = window.location.pathname.split("/");
           const data = await axios
@@ -183,9 +175,8 @@ const router = createBrowserRouter(
       <Route path="/admin-dashboard" element={<AdminPage />}>
         <Route
           loader={async () => {
-            const navigate = useNavigate();
             if (!document.cookie.token) {
-              navigate("/login");
+              window.location.href("/login");
             }
             const data = await axios
               .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
