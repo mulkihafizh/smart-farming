@@ -39,7 +39,7 @@ const router = createBrowserRouter(
               }
             });
 
-          return;
+          return null;
         }}
         element={<RegisterPage />}
       />
@@ -60,7 +60,7 @@ const router = createBrowserRouter(
               }
             });
 
-          return;
+          return null;
         }}
         element={<LoginPage />}
       />
