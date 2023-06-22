@@ -48,7 +48,7 @@ export default function LoginPage() {
         setCookie("toastMessage", "Login Berhasil", {
           path: "/",
         });
-        setCookie("token", res.token, {
+        setCookie("token", res.data.token, {
           path: "/",
           maxAge: 3600,
         });
