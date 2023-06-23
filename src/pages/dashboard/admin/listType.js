@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function ListType(props) {
   const [data, setData] = useState({ types: [] });
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [cookies] = useCookies(["token"]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Apakah Anda Yakin Ingin Menghapus Tipe Ini?"))
@@ -23,12 +25,15 @@ export default function ListType(props) {
           props.showToast("Berhasil Menghapus Tipe", false);
           const getData = async () => {
             await axios
-              .get(process.env.REACT_APP_API_URL + "/type/all", {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                withCredentials: true,
-              })
+              .get(
+                process.env.REACT_APP_API_URL + "/type/all/" + cookies.token,
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  withCredentials: true,
+                }
+              )
               .then((res) => {
                 setData(res.data);
               })
