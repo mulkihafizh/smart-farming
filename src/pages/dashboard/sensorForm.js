@@ -57,6 +57,7 @@ export default function SensorFarm(props) {
           }
         })
         .catch((err) => {
+          navigate("/dashboard");
           props.showToast(err.response.data.error, true);
         });
     };
@@ -73,6 +74,7 @@ export default function SensorFarm(props) {
           setIsLoading(false);
         })
         .catch((err) => {
+          navigate("/dashboard");
           props.showToast(err.response.data.error, true);
         });
     };
