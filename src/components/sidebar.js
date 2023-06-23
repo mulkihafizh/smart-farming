@@ -63,27 +63,28 @@ export default function Sidebar({
                   <p>Aktuator</p>
                 </p>
               </div>
-              <div className="sideItems">
-                <Link
-                  to={`/tambah-sensor/${selectedFarm._id}`}
-                  className="itemTitle"
-                >
-                  <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
-                </Link>
-                <div className="items">
-                  <ul>
-                    {selectedActuator.length > 0 &&
-                      selectedActuator.map((actuator) => (
-                        <li key={actuator._id}>
-                          <p>{actuator.name}</p>
-                          <p>{actuator.value}</p>
-                        </li>
-                      ))}
-                    {selectedActuator.length === 0 && <p>Tidak ada sensor</p>}
-                  </ul>
+              {selectedActuator.length > 0 && (
+                <div className="sideItems">
+                  <Link
+                    to={`/tambah-sensor/${selectedFarm._id}`}
+                    className="itemTitle"
+                  >
+                    <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
+                  </Link>
+                  <div className="items">
+                    <ul>
+                      {selectedActuator.length > 0 &&
+                        selectedActuator.map((actuator) => (
+                          <li key={actuator._id}>
+                            <p>{actuator.name}</p>
+                            <p>{actuator.value}</p>
+                          </li>
+                        ))}
+                      {selectedActuator.length === 0 && <p>Tidak ada sensor</p>}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-
+              )}
               <div className="sideItems">
                 <div href="" className="itemTitle">
                   <i className="fa-solid fa-gear"></i> <p>Sensor</p>
