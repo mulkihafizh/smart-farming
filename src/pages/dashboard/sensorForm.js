@@ -42,7 +42,7 @@ export default function SensorFarm(props) {
     }
     const getTypes = async () => {
       await axios
-        .get(process.env.REACT_APP_API_URL + "/type/all", {
+        .get(process.env.REACT_APP_API_URL + "/type/all/" + cookies.token, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -51,7 +51,7 @@ export default function SensorFarm(props) {
         .then((res) => {
           setOptions(res.data.types);
           setActuators(res.data.actuators);
-          if(res.data.actuators.length===0){
+          if (res.data.actuators.length === 0) {
             props.showToast("Tidak ada actuator yang tersedia", true);
             navigate("/dashboard");
           }
