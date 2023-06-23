@@ -41,19 +41,7 @@ export default function ActuatorFarm(props) {
     if (!cookies.token) {
       navigate("/dashboard");
     }
-    const getTypes = async () => {
-      await axios
-        .get(process.env.REACT_APP_API_URL + "/type/all", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        })
-        .then((res) => {})
-        .catch((err) => {
-          props.showToast(err.response.data.error, true);
-        });
-    };
+
     const getData = async () => {
       await axios
         .get(process.env.REACT_APP_API_URL + `/farm/${farmId}`, {
@@ -71,7 +59,6 @@ export default function ActuatorFarm(props) {
         });
     };
     getData();
-    getTypes();
   }, [cookies.token, navigate, farmId, props]);
 
   const handleSubmit = (e) => {
