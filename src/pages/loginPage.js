@@ -54,7 +54,7 @@ export default function LoginPage(props) {
         navigate("/dashboard");
       })
       .catch((err) => {
-        props.showToast("Login Gagal!", true);
+        props.showToast(err.response.data.error, true);
       });
     setIsLoading(false);
   };

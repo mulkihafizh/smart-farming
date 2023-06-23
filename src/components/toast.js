@@ -1,7 +1,6 @@
 import "../assets/css/toast.css";
 
 const Toast = (props) => {
-  console.log(props);
   return (
     <>
       {props.toast && (
