@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function ListUser() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const [cookies] = useCookies(["token"]);
 
   useEffect(() => {
     const getUsers = async () => {
       await axios
-        .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .get(
+          process.env.REACT_APP_API_URL +
+            "/user/dashboard/admin/" +
+            cookies.token,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((res) => {
           setUsers(res.data.users);
           setIsLoading(false);
@@ -27,7 +34,7 @@ export default function ListUser() {
         });
     };
     getUsers();
-  }, [navigate]);
+  }, [navigate, cookies.token]);
 
   if (isLoading) {
     return <></>;

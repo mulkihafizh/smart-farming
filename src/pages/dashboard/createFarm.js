@@ -88,7 +88,7 @@ export default function CreateFarm(props) {
                     />
                   </div>
                   <div className="inputGroup">
-                    <label htmlFor="farmName">Luas Lahan</label>
+                    <label htmlFor="farmName">Luas Lahan (Meter)</label>
                     <input
                       type="number"
                       onChange={(e) => {

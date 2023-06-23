@@ -8,6 +8,7 @@ import CreateSensor from "./pages/dashboard/sensorForm";
 import AdminPage from "./pages/dashboard/admin/adminDashboard";
 import ListUser from "./pages/dashboard/admin/listUser";
 import Layout from "./pages/layout";
+import ActuatorFarm from "./pages/dashboard/createActuator";
 import ListType from "./pages/dashboard/admin/listType";
 import { useState } from "react";
 import Toast from "./components/toast";
@@ -47,6 +48,10 @@ function App() {
               element={<CreateFarm showToast={showToast} />}
             />
             <Route
+              path="/tambah-aktuator/:farmId"
+              element={<ActuatorFarm showToast={showToast} />}
+            />
+            <Route
               path="/tambah-sensor/:farmId"
               element={<CreateSensor showToast={showToast} />}
             />
@@ -57,7 +62,10 @@ function App() {
               element={<AdminPage showToast={showToast} />}
             >
               <Route index element={<ListUser />} />
-              <Route path="/admin-dashboard/types" element={<ListType />} />
+              <Route
+                path="/admin-dashboard/types"
+                element={<ListType showToast={showToast} />}
+              />
             </Route>
           </Route>
         </Routes>

@@ -15,25 +15,26 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-export default function SensorFarm(props) {
+export default function ActuatorFarm(props) {
   const { farmId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [farm, setFarm] = useState({});
-  const [options, setOptions] = useState([]);
+  const options = [];
   const [name, setName] = useState("");
   const [guid, setGuid] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedActuator, setSelectedActuator] = useState("");
-  const [actuators, setActuators] = useState([]);
   let navigate = useNavigate();
   const [cookies] = useCookies(["userId"]);
+  for (let i = 1; i <= 8; i++) {
+    options.push(
+      <option key={i} value={i}>
+        {i}
+      </option>
+    );
+  }
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
-  };
-
-  const handleActuator = (event) => {
-    setSelectedActuator(event.target.value);
   };
 
   useEffect(() => {
@@ -48,10 +49,7 @@ export default function SensorFarm(props) {
           },
           withCredentials: true,
         })
-        .then((res) => {
-          setOptions(res.data.types);
-          setActuators(res.data.actuators);
-        })
+        .then((res) => {})
         .catch((err) => {
           props.showToast(err.response.data.error, true);
         });
@@ -80,21 +78,20 @@ export default function SensorFarm(props) {
     e.preventDefault();
 
     console.log(name, selectedOption, guid, farmId, cookies.userId);
-    if (!name || selectedOption === "" || !guid || selectedActuator === "") {
+    if (!name || selectedOption === "" || !guid) {
       props.showToast("Harap isi semua field", true);
       return;
     }
     const data = {
       name: name,
       _guid: guid,
-      type: selectedOption,
+      value: selectedOption,
       _farm_id: farmId,
       _user_id: cookies.userId,
-      _actuator_id: selectedActuator,
     };
 
     axios
-      .post(process.env.REACT_APP_API_URL + "/sensor/create", data, {
+      .post(process.env.REACT_APP_API_URL + "/actuator/create", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -103,7 +100,7 @@ export default function SensorFarm(props) {
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");
-          props.showToast("Berhasil Menambahkan Sensor", false);
+          props.showToast("Berhasil Menambahkan Aktuator", false);
         }
       })
       .catch((err) => {
@@ -124,13 +121,13 @@ export default function SensorFarm(props) {
         <div id="mapContainer" className="formDivided">
           <div className="createFormContainer">
             <div className="farmFormTitle">
-              <h1>Sensor Farm</h1>
+              <h1>Actuator Farm</h1>
             </div>
             <div className="farmForm">
               <form id="farmInputForm">
                 <div className="inputGroup">
                   <div className="inputGroup">
-                    <label htmlFor="farmName">Sensor Name</label>
+                    <label htmlFor="farmName">Actuator Name</label>
                     <input
                       type="text"
                       name="farmName"
@@ -148,7 +145,7 @@ export default function SensorFarm(props) {
                     />
                   </div>
                   <div className="inputGroup">
-                    <label htmlFor="farmType">Select Sensor</label>
+                    <label htmlFor="farmType">Select Value</label>
                     <select
                       value={selectedOption}
                       onChange={handleSelectChange}
@@ -163,34 +160,7 @@ export default function SensorFarm(props) {
                       >
                         Choose Sensor
                       </option>
-                      {options.map((option) => (
-                        <option key={option.id} value={option.name}>
-                          {option.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="inputGroup">
-                    <label htmlFor="farmType">Select Actuator</label>
-                    <select
-                      value={selectedActuator}
-                      onChange={handleActuator}
-                      name="farmType"
-                      id="farmType"
-                    >
-                      <option
-                        disabled
-                        hidden
-                        value=""
-                        style={{ color: "gray" }}
-                      >
-                        Choose Actuator
-                      </option>
-                      {actuators.map((option) => (
-                        <option key={option._id} value={option._id}>
-                          {option.name}
-                        </option>
-                      ))}
+                      {options}
                     </select>
                   </div>
                 </div>

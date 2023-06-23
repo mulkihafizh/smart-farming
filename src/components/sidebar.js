@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export default function Sidebar({
   selectedFarm,
   selectedSensor,
+  selectedActuator,
   handleSensorItemClick,
   user,
 }) {
@@ -52,8 +53,8 @@ export default function Sidebar({
               <p className="farmName">{selectedFarm.name}</p>
               <div className="sideItems">
                 <Link
-                  to={`/tambah-aktuator/${selectedFarm._id}`}
                   className="itemTitle"
+                  to={`/tambah-aktuator/${selectedFarm._id}`}
                 >
                   <i className="fa-solid fa-plus"></i> <p>Tambah Aktuator</p>
                 </Link>
@@ -69,7 +70,20 @@ export default function Sidebar({
                 >
                   <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
                 </Link>
+                <div className="items">
+                  <ul>
+                    {selectedActuator.length > 0 &&
+                      selectedActuator.map((actuator) => (
+                        <li key={actuator._id}>
+                          <p>{actuator.name}</p>
+                          <p>{actuator.value}</p>
+                        </li>
+                      ))}
+                    {selectedActuator.length === 0 && <p>Tidak ada sensor</p>}
+                  </ul>
+                </div>
               </div>
+
               <div className="sideItems">
                 <div href="" className="itemTitle">
                   <i className="fa-solid fa-gear"></i> <p>Sensor</p>

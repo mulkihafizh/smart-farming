@@ -20,6 +20,7 @@ export default function Dashboard(props) {
   const [cookies, setCookie] = useCookies(["token"]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedSensors, setSelectedSensor] = useState([]);
+  const [selectedActuator, setSelectedActuator] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
   const [loggingOut, setLogout] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
@@ -30,6 +31,7 @@ export default function Dashboard(props) {
     sensor: [],
     history: [],
     user: {},
+    actuator: [],
   });
   let navigate = useNavigate();
 
@@ -43,6 +45,10 @@ export default function Dashboard(props) {
     const filteredSensor = data.sensor.filter(
       (sensor) => sensor._farm_id === farmId
     );
+    const filteredActuator = data.actuator.filter(
+      (actuator) => actuator._farm_id === farmId
+    );
+    setSelectedActuator(filteredActuator);
     setSelectedSensor(filteredSensor);
   };
 
@@ -55,12 +61,15 @@ export default function Dashboard(props) {
     const fetchFarm = async () => {
       try {
         await axios
-          .get(process.env.REACT_APP_API_URL + "/user/dashboard", {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
+          .get(
+            process.env.REACT_APP_API_URL + "/user/dashboard/" + cookies.token,
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then((res) => {
             setData(res.data);
             setIsLoading(false);
@@ -151,6 +160,7 @@ export default function Dashboard(props) {
       )}
       <SideBar
         selectedSensor={selectedSensors}
+        selectedActuator={selectedActuator}
         selectedFarm={selectedFarm}
         handleSensorItemClick={handleSensorItemClick}
         user={data.user}

@@ -82,7 +82,7 @@ export default function RegisterPage(props) {
           </form>
           <div className="button">
             <button className="textButton submitBtn" onClick={handleSubmit}>
-              Login
+              Register
             </button>
           </div>
           <p className="registertext">

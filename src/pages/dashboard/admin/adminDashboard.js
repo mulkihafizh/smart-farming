@@ -20,11 +20,19 @@ export default function AdminPage(props) {
   };
 
   useEffect(() => {
+    if (!cookies.token) {
+      navigate("/login");
+    }
     const getUsers = async () => {
       await axios
-        .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
-          withCredentials: true,
-        })
+        .get(
+          process.env.REACT_APP_API_URL +
+            "/user/dashboard/admin/" +
+            cookies.token,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           setIsLoading(false);
         })
