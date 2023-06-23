@@ -8,6 +8,43 @@ export default function ListType(props) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("Apakah Anda Yakin Ingin Menghapus Tipe Ini?"))
+      return false;
+    await axios
+      .get(process.env.REACT_APP_API_URL + "/type/delete/" + id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          props.showToast("Berhasil Menghapus Tipe", false);
+          const getData = async () => {
+            await axios
+              .get(process.env.REACT_APP_API_URL + "/type/all", {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                withCredentials: true,
+              })
+              .then((res) => {
+                setData(res.data);
+              })
+              .catch((err) => {
+                navigate();
+              });
+          };
+          getData();
+        }
+      })
+      .catch((err) => {
+        props.showToast(err.response.data.err, true);
+      });
+    return false;
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -104,7 +141,7 @@ export default function ListType(props) {
           </div>
         </div>
       ) : null}
-      <div className="title typeTitle">
+      <div className="title">
         <h1>List Tipe</h1>
         <div className="wrapTypeItems">
           <i className="fa-solid fa-plus"></i>{" "}
@@ -117,6 +154,7 @@ export default function ListType(props) {
             <th>Name</th>
             <th>Created At</th>
             <th>Jumlah Sensor</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -136,6 +174,13 @@ export default function ListType(props) {
                 <td>{type.name}</td>
                 <td>{formattedDate}</td>
                 <td>{type.count}</td>
+                <td>
+                  <i
+                    className="fa-solid fa-trash"
+                    style={{ color: "red" }}
+                    onClick={() => handleDelete(type.id)}
+                  ></i>
+                </td>
               </tr>
             );
           })}
