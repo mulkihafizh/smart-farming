@@ -74,12 +74,15 @@ export default function ListType(props) {
           setName("");
           const getData = async () => {
             await axios
-              .get(process.env.REACT_APP_API_URL + "/type/all", {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                withCredentials: true,
-              })
+              .get(
+                process.env.REACT_APP_API_URL + "/type/all/" + cookies.token,
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  withCredentials: true,
+                }
+              )
               .then((res) => {
                 setData(res.data);
               })
@@ -102,7 +105,7 @@ export default function ListType(props) {
   useEffect(() => {
     const getData = async () => {
       await axios
-        .get(process.env.REACT_APP_API_URL + "/type/all", {
+        .get(process.env.REACT_APP_API_URL + "/type/all/" + cookies.token, {
           headers: {
             "Content-Type": "application/json",
           },
