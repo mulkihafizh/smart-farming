@@ -1,10 +1,37 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ListUser() {
-  const data = useLoaderData();
-  const users = data.users;
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const getUsers = async () => {
+      await axios
+        .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setUsers(res.data.users);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            navigate("/login");
+          }
+        });
+    };
+    getUsers();
+  }, [navigate]);
+
+  if (isLoading) {
+    return <></>;
+  }
   console.log(window.location.pathname);
   return (
     <>

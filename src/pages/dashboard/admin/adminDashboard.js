@@ -1,18 +1,48 @@
-import React, { useState } from "react";
-import { NavLink, Link, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
 import "../../../assets/css/admin.css";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
-export default function AdminPage() {
+export default function AdminPage(props) {
+  const [isLoading, setIsLoading] = useState(true);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const handleToggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
+  const navigate = useNavigate();
+  const [cookies] = useCookies(["token"]);
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleProfileClick = () => {
     setShowProfileMenu(!showProfileMenu);
   };
+
+  useEffect(() => {
+    const getUsers = async () => {
+      await axios
+        .get(process.env.REACT_APP_API_URL + "/user/dashboard/admin", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          if (err.response.status === 401 && cookies.token) {
+            navigate("/dashboard");
+            props.showToast("Anda Tidak Memiliki Akses!", true);
+          } else if (err.response.status === 401 && !cookies.token) {
+            navigate("/login");
+            props.showToast("Harap Login Terlebih Dahulu!", true);
+          }
+        });
+    };
+    getUsers();
+  }, [props, navigate, cookies.token]);
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <section className="adminPage">

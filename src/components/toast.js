@@ -1,16 +1,22 @@
-import React from "react";
 import "../assets/css/toast.css";
 
-const Toast = (toast) => {
+const Toast = (props) => {
+  console.log(props);
   return (
-    <div className={`toast ${toast.toast.isError ? "isError" : "isSuccess"}`}>
-      {toast.toast.isError ? (
-        <i className="fa-solid toastIcon fa-circle-xmark"></i>
-      ) : (
-        <i className="fa-solid toastIcon fa-circle-check"></i>
+    <>
+      {props.toast && (
+        <div
+          className={`toast ${props.toast.isError ? "isError" : "isSuccess"}`}
+        >
+          {props.toast.isError ? (
+            <i className="fa-solid toastIcon fa-circle-xmark"></i>
+          ) : (
+            <i className="fa-solid toastIcon fa-circle-check"></i>
+          )}
+          <span className="toast-message">{props.toast.message}</span>
+        </div>
       )}
-      <span className="toast-message">{toast.toast.message}</span>
-    </div>
+    </>
   );
 };
 

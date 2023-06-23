@@ -4,9 +4,8 @@ import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useParams } from "react-router-dom";
-import Toast from "../../components/toast";
 import axios from "axios";
-import { useNavigate, Link, useLoaderData } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -16,17 +15,16 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-export default function SensorFarm() {
-  const data = useLoaderData();
-  const farm = data.farm.farm;
+export default function SensorFarm(props) {
   const { farmId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [farm, setFarm] = useState({});
+  const [options, setOptions] = useState([]);
   const [name, setName] = useState("");
   const [guid, setGuid] = useState("");
-  const options = data.types.types;
   const [selectedOption, setSelectedOption] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [selectedActuator, setSelectedActuator] = useState("");
+  const [actuators, setActuators] = useState("");
   let navigate = useNavigate();
   const [cookies] = useCookies(["userId"]);
 
@@ -34,19 +32,56 @@ export default function SensorFarm() {
     setSelectedOption(event.target.value);
   };
 
+  const handleActuator = (event) => {
+    setSelectedActuator(event.target.value);
+  };
+
   useEffect(() => {
     if (!cookies.token) {
       navigate("/dashboard");
     }
-  }, [cookies.token, navigate, farmId]);
+    const getTypes = async () => {
+      await axios
+        .get(process.env.REACT_APP_API_URL + "/type/all", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setOptions(res.data.types);
+          setActuators(res.data.actuators);
+        })
+        .catch((err) => {
+          props.showToast(err.response.data.error, true);
+        });
+    };
+    const getData = async () => {
+      await axios
+        .get(process.env.REACT_APP_API_URL + `/farm/${farmId}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setFarm(res.data.farm);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          props.showToast(err.response.data.error, true);
+        });
+    };
+    getData();
+    getTypes();
+  }, [cookies.token, navigate, farmId, props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || selectedOption === "" || !guid) {
-      setIsError(true);
-      setToastMessage("Semua kolom harus diisi");
-      setShowToast(true);
+    console.log(name, selectedOption, guid, farmId, cookies.userId);
+    if (!name || selectedOption === "" || !guid || selectedActuator === "") {
+      props.showToast("Harap isi semua field", true);
       return;
     }
     const data = {
@@ -55,6 +90,7 @@ export default function SensorFarm() {
       type: selectedOption,
       _farm_id: farmId,
       _user_id: cookies.userId,
+      _actuator_id: selectedActuator,
     };
 
     axios
@@ -67,22 +103,23 @@ export default function SensorFarm() {
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");
+          props.showToast("Berhasil Menambahkan Sensor", false);
         }
       })
       .catch((err) => {
-        console.log(err);
-        setIsError(true);
-        setToastMessage(err.response.data.error);
-        setShowToast(true);
+        props.showToast(err.response.data.error, true);
       });
   };
+
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <div id="create">
       <Link to={`/dashboard`}>
         <i className="fa-solid fa-arrow-left backIcon"></i>
       </Link>
-      {showToast && <Toast isError={isError} message={toastMessage} />}
       <div className="createForm">
         <div id="mapContainer" className="formDivided">
           <div className="createFormContainer">
@@ -127,7 +164,30 @@ export default function SensorFarm() {
                         Choose Sensor
                       </option>
                       {options.map((option) => (
-                        <option key={option._id} value={option.name}>
+                        <option key={option.id} value={option.name}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="inputGroup">
+                    <label htmlFor="farmType">Select Actuator</label>
+                    <select
+                      value={selectedActuator}
+                      onChange={handleActuator}
+                      name="farmType"
+                      id="farmType"
+                    >
+                      <option
+                        disabled
+                        hidden
+                        value=""
+                        style={{ color: "gray" }}
+                      >
+                        Choose Actuator
+                      </option>
+                      {actuators.map((option) => (
+                        <option key={option._id} value={option._id}>
                           {option.name}
                         </option>
                       ))}

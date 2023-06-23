@@ -4,10 +4,9 @@ import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useNavigate, Link, useLoaderData } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import Toast from "../../components/toast";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -16,19 +15,23 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [selectedFarm, setSelectedFarm] = useState(null);
   const [cookies, setCookie] = useCookies(["token"]);
-  let navigate = useNavigate();
-  const data = useLoaderData();
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedSensors, setSelectedSensor] = useState([]);
   const [clickedSensor, setClickedSensor] = useState("");
   const [loggingOut, setLogout] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
   const [details, setDetails] = useState({});
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState({
+    farm: [],
+    sensor: [],
+    history: [],
+    user: {},
+  });
+  let navigate = useNavigate();
 
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);
@@ -44,19 +47,34 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    const mapContainer = document.getElementById("mapContainer");
-
-
-    if (cookies.toastMessage) {
-      setToastMessage({ message: cookies.toastMessage, isError: false });
-      setShowToast(true);
-      setInterval(() => {
-        setToastMessage("");
-        setShowToast(false);
-        setCookie("toastMessage", "", { path: "/", maxAge: 0 });
-      }, 3000);
+    if (!cookies.token) {
+      navigate("/login");
+      props.showToast("Anda Harus Login!", true);
     }
-
+    const mapContainer = document.getElementById("mapContainer");
+    const fetchFarm = async () => {
+      try {
+        await axios
+          .get(process.env.REACT_APP_API_URL + "/user/dashboard", {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            setData(res.data);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            navigate("/login");
+            props.showToast("Anda Harus Login!", true);
+          });
+      } catch (err) {
+        navigate("/login");
+        props.showToast("Anda Harus Login!", true);
+      }
+    };
+    fetchFarm();
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
@@ -77,7 +95,7 @@ export default function Dashboard() {
     return () => {
       observer.disconnect();
     };
-  }, [cookies.token, navigate, setCookie, cookies.toastMessage]);
+  }, [cookies.token, navigate, setCookie, props]);
 
   const handleSensorItemClick = (sensorId) => {
     setClickedSensor((prevSensor) => (prevSensor === sensorId ? "" : sensorId));
@@ -90,6 +108,10 @@ export default function Dashboard() {
     );
     setSelectedHistory(history);
   };
+
+  if (isLoading) {
+    return <></>;
+  }
 
   axios.defaults.withCredentials = true;
   const handleLogout = (e) => {
@@ -113,6 +135,7 @@ export default function Dashboard() {
           setCookie("userId", "", { path: "/", maxAge: 0 });
           setCookie("token", "", { path: "/", maxAge: 0 });
           navigate("/login");
+          props.showToast("Successfully Logout", false);
         }
       });
   };
@@ -126,7 +149,6 @@ export default function Dashboard() {
           </div>
         </div>
       )}
-      {showToast && <Toast toast={toastMessage} />}
       <SideBar
         selectedSensor={selectedSensors}
         selectedFarm={selectedFarm}

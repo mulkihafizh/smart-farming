@@ -3,22 +3,20 @@ import "../assets/css/login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import Toast from "../components/toast";
 
-export default function LoginPage() {
+export default function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["token"]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (cookies.token) {
       navigate("/dashboard");
+      props.showToast("Anda Telah Login!", true);
     }
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate, props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,9 +25,7 @@ export default function LoginPage() {
     }
 
     if (email === "" || password === "") {
-      setToastMessage({ message: "Please fill all the fields", isError: true });
-      setShowToast(true);
-      setIsLoading(true);
+      props.showToast("Email dan Password tidak boleh kosong!", true);
       return;
     }
 
@@ -45,28 +41,26 @@ export default function LoginPage() {
         }
       )
       .then((res) => {
-        setCookie("toastMessage", "Login Berhasil", {
-          path: "/",
-        });
         setCookie("token", res.data.token, {
           path: "/",
-          maxAge: 3600,
+          maxAge: 36000,
+          sameSite: "none",
+          secure: true,
         });
+        setCookie("userId", res.data.user._id, {
+          path: "/",
+        });
+        props.showToast("Login Berhasil!", false);
         navigate("/dashboard");
       })
       .catch((err) => {
-        setToastMessage({
-          message: err.response.data.error,
-          isError: true,
-        });
-        setShowToast(true);
+        props.showToast("Login Gagal!", true);
       });
     setIsLoading(false);
   };
 
   return (
     <div id="Login">
-      {showToast && <Toast toast={toastMessage} />}
       <header className="LoginHeader">
         <div className="LoginSection">
           <p className="loginappTitle">Login Credential</p>

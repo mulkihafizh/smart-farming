@@ -1,8 +1,29 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ListType() {
-  const data = useLoaderData();
+  const [data, setData] = useState({ types: [] });
+  const navigate = useNavigate();
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(process.env.REACT_APP_API_URL + "/type/all", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((err) => {
+          navigate();
+        });
+    };
+    getData();
+  }, [navigate]);
+
   return (
     <>
       <div className="title">

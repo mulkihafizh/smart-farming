@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Toast from "../../components/toast";
+import { useCookies } from "react-cookie";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -14,24 +14,28 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-export default function CreateFarm() {
+export default function CreateFarm(props) {
   let navigate = useNavigate();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [area, setArea] = useState("");
   const [longitude, setLong] = useState("");
   const [latitude, setLat] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [cookies] = useCookies(["token"]);
+
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate("/login");
+      props.showToast("Anda Harus Login Terlebih Dahulu", true);
+    }
+  }, [cookies.token, navigate, props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!name || !type || !area || !longitude || !latitude) {
-      setIsError(true);
-      setToastMessage("Semua kolom harus diisi");
-      setShowToast(true);
+      props.showToast("Harus mengisi semua field", true);
+
       return;
     }
     const data = {
@@ -51,13 +55,11 @@ export default function CreateFarm() {
       .then((res) => {
         if (res.data.success) {
           navigate("/dashboard");
+          props.showToast("Berhasil Menambahkan Lahan", false);
         }
       })
       .catch((err) => {
-        console.log(err);
-        setIsError(true);
-        setToastMessage(err.response.data.error);
-        setShowToast(true);
+        props.showToast(err.response.data.err, true);
       });
   };
 
@@ -66,7 +68,6 @@ export default function CreateFarm() {
       <Link to={`/dashboard`}>
         <i className="fa-solid fa-arrow-left backIcon"></i>
       </Link>
-      {showToast && <Toast isError={isError} message={toastMessage} />}
       <div className="createForm">
         <div id="mapContainer" className="formDivided">
           <div className="createFormContainer">
@@ -89,7 +90,7 @@ export default function CreateFarm() {
                   <div className="inputGroup">
                     <label htmlFor="farmName">Luas Lahan</label>
                     <input
-                      type="text"
+                      type="number"
                       onChange={(e) => {
                         setArea(e.target.value);
                       }}
@@ -110,7 +111,7 @@ export default function CreateFarm() {
                     <div className="inputGroup">
                       <label htmlFor="farmName">Latitude</label>
                       <input
-                        type="text"
+                        type="number"
                         onChange={(e) => {
                           setLat(e.target.value);
                         }}
@@ -120,7 +121,7 @@ export default function CreateFarm() {
                     <div className="inputGroup">
                       <label htmlFor="farmName">Longitude</label>
                       <input
-                        type="text"
+                        type="number"
                         onChange={(e) => {
                           setLong(e.target.value);
                         }}
@@ -142,6 +143,9 @@ export default function CreateFarm() {
             (!longitude && (
               <div className="loadingMap">Masukkan Longitude dan Latitude!</div>
             ))}
+          {!latitude && !longitude && (
+            <div className="loadingMap">Masukkan Longitude dan Latitude!</div>
+          )}
           {latitude && longitude && (
             <MapContainer
               center={[latitude, longitude]}

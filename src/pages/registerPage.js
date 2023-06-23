@@ -3,30 +3,26 @@ import "../assets/css/register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import Toast from "../components/toast";
 
-export default function RegisterPage() {
+export default function RegisterPage(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     if (cookies.token) {
       navigate("/dashboard");
+      props.showToast("Anda Telah Login!", true);
     }
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate, props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (username === "" || email === "" || password === "") {
-      setToastMessage({ message: "Please fill all the fields", isError: true });
-
-      setShowToast(true);
+      props.showToast("Semua field harus diisi!", true);
 
       return;
     }
@@ -46,17 +42,14 @@ export default function RegisterPage() {
       .then((res) => {
         if (res.status) {
           navigate("/login");
+          props.showToast("Register Berhasil!", false);
         }
       })
-      .catch((err) => {
-        setToastMessage({ message: err.response.data.error, isError: true });
-        setShowToast(true);
-      });
+      .catch((err) => {});
   };
 
   return (
     <div id="register">
-      {showToast && <Toast toast={toastMessage} />}
       <header className="registerHeader">
         <div className="registerSection">
           <p className="registertitleApp">Register</p>
