@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, Marker, Popup } from "react-leaflet";
 import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
@@ -7,6 +7,7 @@ import L from "leaflet";
 import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -251,10 +252,7 @@ export default function Dashboard(props) {
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
             >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution=""
-              />
+              <ReactLeafletGoogleLayer apiKey="YOUR_API_KEY" type={"roadmap"} />
               {data.farm.length > 0 &&
                 data.farm.map((farm, index) => {
                   return (
