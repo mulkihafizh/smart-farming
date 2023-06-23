@@ -44,6 +44,7 @@ export default function CreateFarm(props) {
       farmArea: area,
       longitude: longitude,
       latitude: latitude,
+      userId: cookies.userId,
     };
     axios
       .post(process.env.REACT_APP_API_URL + "/farm/create", data, {
