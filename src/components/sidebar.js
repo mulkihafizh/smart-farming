@@ -58,6 +58,14 @@ export default function Sidebar({
                 >
                   <i className="fa-solid fa-plus"></i> <p>Tambah Aktuator</p>
                 </Link>
+                {selectedActuator.length > 0 && (
+                  <Link
+                    to={`/tambah-sensor/${selectedFarm._id}`}
+                    className="itemTitle"
+                  >
+                    <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
+                  </Link>
+                )}
                 <p className="itemTitle">
                   <i className="fa-solid fa-screwdriver-wrench"></i>{" "}
                   <p>Aktuator</p>
@@ -65,12 +73,6 @@ export default function Sidebar({
               </div>
               {selectedActuator.length > 0 && (
                 <div className="sideItems">
-                  <Link
-                    to={`/tambah-sensor/${selectedFarm._id}`}
-                    className="itemTitle"
-                  >
-                    <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
-                  </Link>
                   <div className="items">
                     <ul>
                       {selectedActuator.length > 0 &&
