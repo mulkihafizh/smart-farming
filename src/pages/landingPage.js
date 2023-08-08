@@ -10,16 +10,14 @@ export default function LandingPage() {
     <div id="landing">
       <header className="landingHeader">
         <div className="landingSection">
-          <p className="appTitle">Smart Farming</p>
           <div className="mainHeader">
             <p className="bigText">Smart Farming Tracker</p>
-            <p className="mediumText">
-              Check All Users <span>Here!</span>
-            </p>
+
             <p className="smallText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley.
+              Dengan fitur pemantauan real-time, prediksi, pengendalian
+              otomatis, dan manajemen sumber daya, kami mempermudah pengelolaan
+              pertanian Anda agar lebih efisien, berkelanjutan, dan menghasilkan
+              hasil panen yang berkualitas.
             </p>
             <div className="headerButton">
               {cookies.token ? (
@@ -37,35 +35,40 @@ export default function LandingPage() {
       </header>
 
       <div className="card-container">
-        <h1 className="card-heading">For your Information</h1>
+        <h1 className="card-heading">Fitur-Fitur Aplikasi</h1>
         <div className="card-content">
           <div className="card">
             <span className="tag">Feature</span>
-            <h2 className="card-title">Title</h2>
+            <h2 className="card-title">Pemantauan dan Pemetaan Tanaman</h2>
             <div className="card-info">
               <p className="info">
-                Elemenatary tracks all the events for the day as you scheduled
-                and you will never have to worry.
+                Melakukan pemantauan real-time dan pemetaan kondisi tanaman
+                berdasarkan data sensor untuk meningkatkan pemahaman dan
+                pengambilan keputusan yang tepat.
               </p>
             </div>
           </div>
           <div className="card">
             <span className="tag">Feature</span>
-            <h2 className="card-title">Title</h2>
+            <h2 className="card-title">
+              Pengawasan dan Pengendalian Jarak Jauh
+            </h2>
             <div className="card-info">
               <p className="info">
-                Elemenatary tracks all the events for the day as you scheduled
-                and you will never have to worry.
+                Memungkinkan pengawasan serta pengendalian perangkat dan kondisi
+                pertanian dari jarak jauh melalui platform web atau aplikasi
+                seluler.
               </p>
             </div>
           </div>
           <div className="card">
             <span className="tag">Feature</span>
-            <h2 className="card-title">Title</h2>
+            <h2 className="card-title">Otomatisasi melalui Aktuator</h2>
             <div className="card-info">
               <p className="info">
-                Elemenatary tracks all the events for the day as you scheduled
-                and you will never have to worry.
+                Penggunaan data sensor untuk mengontrol aktuator, seperti sistem
+                irigasi otomatis dan pemberian nutrisi, untuk memfasilitasi
+                tindakan otomatis yang efisien dan tepat waktu pada pertanian.
               </p>
             </div>
           </div>
