@@ -287,6 +287,7 @@ export default function Dashboard(props) {
                 parseFloat(setLongCenter.$numberDecimal),
               ]}
               zoom={15}
+              scrollWheelZoom={false}
               style={{ height: "100%", borderRadius: "20px" }}
             >
               <TileLayer
