@@ -8,6 +8,26 @@
   border-radius: 50px;
   height: 40px;
 }
+
+.search {
+  position: relative;
+}
+
+.searchList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  list-style: none;
+  background-color: #ffffffc7;
+  z-index: 9999;
+  position: absolute;
+}
+
+.searchList li {
+  cursor: pointer;
+  padding: 8px 20px;
+  border: rgba(0, 0, 0, 0.496) 0.5px solid;
+}
 @media (min-width: 1057px) {
   .divided {
     display: grid;
@@ -664,4 +684,3 @@
   gap: 20px;
   padding: 10px;
 }
-

@@ -66,10 +66,10 @@ export default function Sidebar({
                     <i className="fa-solid fa-plus"></i> <p>Tambah Sensor</p>
                   </Link>
                 )}
-                <p className="itemTitle">
+                <div className="itemTitle">
                   <i className="fa-solid fa-screwdriver-wrench"></i>{" "}
                   <p>Aktuator</p>
-                </p>
+                </div>
               </div>
               {selectedActuator.length > 0 && (
                 <div className="sideItems">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Marker, Popup, TileLayer, MapContainer } from "react-leaflet";
 import SideBar from "../../components/sidebar";
 import "../../assets/css/dashboard.css";
 import "leaflet/dist/leaflet.css";
@@ -26,6 +26,9 @@ export default function Dashboard(props) {
   const [selectedHistory, setSelectedHistory] = useState([]);
   const [details, setDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [setLongCenter, setLong] = useState("");
+  const [setLatCenter, setLat] = useState("");
   const [data, setData] = useState({
     farm: [],
     sensor: [],
@@ -39,7 +42,13 @@ export default function Dashboard(props) {
     setShowDropdown(!showDropdown);
   };
 
+  const filteredData = data.farm.filter((farm) => {
+    return farm.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   const handleFarmClick = (farm) => {
+    setLat(farm.latitude);
+    setLong(farm.longitude);
     const farmId = farm._id;
     setSelectedFarm((prevFarm) => (prevFarm === farm ? null : farm));
     const filteredSensor = data.sensor.filter(
@@ -72,6 +81,8 @@ export default function Dashboard(props) {
           )
           .then((res) => {
             setData(res.data);
+            setLat(res.data.farm[0].latitude);
+            setLong(res.data.farm[0].longitude);
             setIsLoading(false);
           })
           .catch((err) => {
@@ -167,10 +178,37 @@ export default function Dashboard(props) {
       />
       <div className="rightSide">
         <header id="dashboardHead">
-          <div className="searchInput">
-            <input type="text" className="searchBar" />
-            <i className="fa-solid fa-magnifying-glass"></i>
+          <div className="search">
+            <div className="searchInput">
+              <input
+                type="text"
+                placeholder="Cari Lahan"
+                className="searchBar"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </div>
+            {searchTerm !== "" && (
+              <ul className="searchList">
+                {filteredData.map((item) => (
+                  <li
+                    onClick={() => {
+                      handleFarmClick(item);
+                      setSearchTerm("");
+                    }}
+                    key={item._id}
+                  >
+                    {item.name}
+                  </li>
+                ))}
+                {filteredData.length === 0 && (
+                  <li className="noResult">Tidak ada hasil</li>
+                )}
+              </ul>
+            )}
           </div>
+
           <div className="userProfile" onClick={handleProfileClick}>
             {data.user.username !== undefined ? (
               <>
@@ -245,15 +283,15 @@ export default function Dashboard(props) {
           {data.farm.length > 0 && data.farm !== [] && (
             <MapContainer
               center={[
-                parseFloat(data.farm[0].latitude.$numberDecimal),
-                parseFloat(data.farm[0].longitude.$numberDecimal),
+                parseFloat(setLatCenter.$numberDecimal),
+                parseFloat(setLongCenter.$numberDecimal),
               ]}
               zoom={15}
               style={{ height: "100%", borderRadius: "20px" }}
             >
               <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution=""
               />
               {data.farm.length > 0 &&
                 data.farm.map((farm, index) => {
@@ -265,7 +303,9 @@ export default function Dashboard(props) {
                         parseFloat(farm.longitude.$numberDecimal),
                       ]}
                       eventHandlers={{
-                        click: () => handleFarmClick(farm),
+                        click: () => {
+                          handleFarmClick(farm);
+                        },
                       }}
                     >
                       <Popup>
