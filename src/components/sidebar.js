@@ -102,7 +102,7 @@ export default function Sidebar({
                               clickedSensor === sensor._id ? "selected" : ""
                             }
                           >
-                            {sensor.name}
+                            {sensor.name} - {sensor.type}
                           </p>
                         </li>
                       ))}
